@@ -23,17 +23,17 @@
 			</div>
 
 			<!-- Patient Search-->
-			<div class="view" id="view-patient-search">
+			<div class="view active" id="view-patient-search">
 				<h1>Patient Search</h1>
-				<select id="patient-select">
-					<option value="" disabled selected hidden>Select a patient</option>
-					<!-- <option value disabled> </option> -->
-					<!-- <option value disabled>—————————————</option> -->
-				</select>
+				<div id="patient-cards-wrapper">
+					<div id="patient-cards">
+					</div>
+
+				</div>
 			</div>
 
 			<!-- Patient chart -->
-			<div class="view active" id="view-patient-chart">
+			<div class="view" id="view-patient-chart">
 				<!-- Patient Info card -->
 				<div id="patient-info">
 					<div id="patient-title">
@@ -198,7 +198,12 @@
 				</div>
 			</div>
 
+			
 			<div style="display: none">
+				&#128100; &#x1F464;
+				&#x1f468; &#x1f469;
+	
+				<img src="./img/bust-in-silhouette.svg" class="patient-img">
 				<button class="btn">Button 1</button>
 				<button class="btn">Button 2</button>
 
@@ -269,7 +274,7 @@
 					}
 
 					showView("patient-chart");
-					document.getElementById("patient-select").selectedIndex = 0;
+					// document.getElementById("patient-select").selectedIndex = 0;
 					document.getElementById("patient-info").classList.remove("hidden");
 
 					const displayName = `${patient.lastName}, ${patient.firstName} (${patient.mrn})`;
@@ -280,17 +285,46 @@
 				}
 
 				function buildPatientSelect() {
-					const select = document.getElementById("patient-select");
-					patientData.forEach((patient) => {
-						const option = document.createElement("option");
-						option.value = patient.mrn;
-						option.text = `${patient.lastName}, ${patient.firstName} (${patient.dateOfBirth})`;
-						select.add(option);
-					});
 
-					select.addEventListener("change", (event) => {
-						displayPatientInfo(event.target.value);
+					// patient cards
+					let patientCards = patientData.map((patient) => {
+						const card = document.createElement("div");
+						card.className = 'patient-card';
+
+						const img = document.createElement("img");
+						img.className = "patient-img";
+						img.src = "./img/bust-in-silhouette.svg";
+						card.appendChild(img);
+
+						const name = document.createElement("div");
+						name.className = "bold";
+						name.appendChild(document.createTextNode(`${patient.lastName}, ${patient.firstName} (${patient.mrn})`));
+						card.appendChild(name);
+
+						const dob = document.createElement("div");
+						dob.appendChild(document.createTextNode(patient.dateOfBirth));
+						card.appendChild(dob);
+
+						card.addEventListener("click", (event) => {
+						displayPatientInfo(patient.mrn);
 					});
+						return card;
+					});
+					
+
+					document.getElementById("patient-cards")
+					.replaceChildren(...patientCards);
+					/*
+					<div class="patient-card">
+						<img src="./img/bust-in-silhouette.svg" class="patient-img">
+						<strong>
+								<span class="patient-name">Dulinty, Maureene (6947012287)</span>
+						
+
+						</strong>
+						<div class="patient-dob">12/11/1981</div>
+					</div>
+					*/
 				}
 
 				document.getElementById("login-form").addEventListener("submit", loginSubmit);

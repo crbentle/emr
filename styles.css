@@ -2,6 +2,7 @@ body {
 	background-color: #f6f6f6;
 	color: #232222;
 	margin: 10px;
+	box-sizing: border-box;
 }
 
 .app {
@@ -169,14 +170,15 @@ option:not(:first-of-type) {
 /* https://codepen.io/serhatbek/pen/bGyVLpM */
 /* https://codepen.io/carolyngreenough/pen/MawmVb */
 .container--tabs {
-	margin: 1rem 0.5rem;
+	/* margin: 1rem 0.5rem; */
+	margin-top: 1rem;
 
 	.nav-tabs {
 		/* float: left; */
 		/* width: 100%; */
 		margin: 0;
 		list-style-type: none;
-		border-bottom: 2px solid #ddd;
+		/* border-bottom: 2px solid #ddd; */
 		/* padding: 0; */
 		height: 2.65em;
 
@@ -223,6 +225,10 @@ option:not(:first-of-type) {
 		border-radius: 8px;
 		overflow: hidden; */
 		position: relative;
+		border: 3px solid #a3b17a;
+		box-sizing: border-box;
+		padding: 5px;
+		border-radius: 8px;
 
 		> .tab-pane {
 			display: none;
@@ -266,7 +272,7 @@ option:not(:first-of-type) {
 	border-left: 1px solid gray;
 	/* padding-left: 10px; */
 	width: 100%;
-	text-align: right;
+	text-align: center;
 
 	input[size="3"] {
 		width: 5ch;
@@ -317,3 +323,40 @@ input::placeholder {
 	background-color: red;
 	font-weight: bold;
 }
+
+/* #patient-cards-wrapper {
+	display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: calc(100vh - 60px - 4em)
+} */
+
+#patient-cards {
+	display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+	overflow: auto;
+}
+
+.patient-card {
+	/* width: 50%; */
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: #a9ceb1;
+    padding: 5px;
+	cursor: pointer;
+}
+.patient-img {
+	width: 75px;
+	height: auto;
+	/* margin-top: 4px; */
+	/* background: url(./img/bust-in-silhouette.svg) no-repeat center / contain; */
+	/* border: 1px solid #d3d3d3; */
+	box-sizing: border-box;
+	float: left;
+    margin-right: 10px;
+  }
+
+  .bold {
+	font-weight: bold;
+  }
