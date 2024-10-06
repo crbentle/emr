@@ -251,12 +251,12 @@ option:not(:first-of-type) {
 
 .vital-sign-grid-row {
 	display: grid;
-	grid-template-columns: [first] 2fr [line2] 1fr [line3] 1fr [col4-start] 1fr [five] 1fr [end];
+	grid-template-columns: [first] 2fr [line2] 1fr [line3] 1fr [col4-start] 1fr [five] 1.5fr [end];
 	column-gap: 5px;
 	align-items: center;
 	justify-items: center;
 	/* padding: 3px 0; */
-	max-width: 600px;
+	max-width: 800px;
 }
 
 .vital-sign-grid-row > div {
@@ -274,12 +274,13 @@ option:not(:first-of-type) {
 	width: 100%;
 	text-align: center;
 
-	input[size="3"] {
-		width: 5ch;
-	}
+	/* input[size="3"] {
+		width: 44%;
+	} */
 }
 .vital-input-container {
 	padding-left: 10px;
+	display: flex;
 }
 /* End Grid Test */
 
@@ -360,3 +361,8 @@ input::placeholder {
   .bold {
 	font-weight: bold;
   }
+
+.mx-2 {
+	margin-left: 2px;
+	margin-right: 2px;
+}
