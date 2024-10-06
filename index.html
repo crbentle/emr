@@ -59,41 +59,117 @@
 									class="glyphicon glyphicon-leaf glyphicon--home--feature two columns text-center"
 								></span>
 								<span class="col-md-10">
-									<form id="vital-sign-form">
-										<div class="vitals-grid-row">
+									<form id="vital-sign-form" autocomplete="off">
+										<div class="vital-sign-grid-row">
 											<div></div>
 											<div>10/2/2024</div>
 											<div>10/3/2024</div>
 											<div>10/4/2024</div>
-											<div class="vitals-input">10/5/2024</div>
+											<div class="vital-sign-input">10/5/2024</div>
 										</div>
-										<hr style="margin: 0;" />
-										<div class="vitals-grid-row">
-											<div class="vitals-label">Blood Pressure</div>
+										<hr style="margin: 0" />
+										<div class="vital-sign-grid-row" data-vital-type="bp">
+											<div class="vital-sign-label">Blood Pressure</div>
 											<div id="col2">120/80</div>
 											<div id="col3">120/80</div>
 											<div id="col4">120/80</div>
-											<div class="vitals-input">
+											<div class="vital-sign-input">
 												<div class="vital-input-container">
-																						
-													<input id="bp-sys" name="bp-sys" size="3" maxlength="3">
+													<input id="bp-sys" name="bp-sys" size="3" maxlength="3" />
 													<span>/</span>
-													<input name="bp-dia" size="3" maxlength="3" >
+													<input id="bp-dia" name="bp-dia" size="3" maxlength="3" />
 												</div>
-								
 											</div>
 										</div>
-										<div class="vitals-grid-row">
-											<div class="vitals-label">Temperature (F)</div>
+										<div class="vital-sign-grid-row" data-vital-type="temperature">
+											<div class="vital-sign-label">Temperature (F)</div>
 											<div>99</div>
 											<div>99</div>
 											<div>99</div>
-											<div class="vitals-input">
+											<div class="vital-sign-input">
 												<div class="vital-input-container">
-																						
-													<input id="temperature" name="temperature" size="3" maxlength="3">
+													<input id="temperature" name="temperature" maxlength="4" />
 												</div>
-								
+											</div>
+										</div>
+										<div class="vital-sign-grid-row" data-vital-type="pulse">
+											<div class="vital-sign-label">Heart Rate</div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div class="vital-sign-input">
+												<div class="vital-input-container">
+													<input id="pulse" name="pulse" maxlength="3" />
+												</div>
+											</div>
+										</div>
+										<div class="vital-sign-grid-row" data-vital-type="o2">
+											<div class="vital-sign-label">Oxygen Saturation</div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div class="vital-sign-input">
+												<div class="vital-input-container">
+													<input id="o2" name="o2" maxlength="3" />
+												</div>
+											</div>
+										</div>
+										<div class="vital-sign-grid-row" data-vital-type="respirations">
+											<div class="vital-sign-label">Respirations</div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div class="vital-sign-input">
+												<div class="vital-input-container">
+													<input id="respirations" name="respirations" maxlength="3" />
+												</div>
+											</div>
+										</div>
+										<div class="vital-sign-grid-row" data-vital-type="pain">
+											<div class="vital-sign-label">Pain (0-10)</div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div class="vital-sign-input">
+												<div class="vital-input-container">
+													<input id="pain" name="pain" maxlength="2" />
+												</div>
+											</div>
+										</div>
+										<div class="vital-sign-grid-row" data-vital-type="height">
+											<div class="vital-sign-label">Height</div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div class="vital-sign-input">
+												<div class="vital-input-container">
+													<input
+														id="height-feet"
+														name="height-feet"
+														size="3"
+														maxlength="3"
+														placeholder="feet"
+													/>
+													<span>/</span>
+													<input
+														id="height-inches"
+														name="height-inches"
+														size="3"
+														maxlength="3"
+														placeholder="inches"
+													/>
+												</div>
+											</div>
+										</div>
+										<div class="vital-sign-grid-row" data-vital-type="weight">
+											<div class="vital-sign-label">Weight (lbs)</div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div class="vital-sign-input">
+												<div class="vital-input-container">
+													<input id="weight" name="weight" maxlength="3" />
+												</div>
 											</div>
 										</div>
 									</form>
@@ -226,6 +302,11 @@
 					patientInfoDiv.classList.add("hidden");
 				});
 
+				// Setup validation on vital-sign inputs
+				document.querySelectorAll(".vital-sign-input input").forEach((input) => {
+					input.addEventListener("blur", validateVitalSign);
+				});
+
 				// store tabs variable
 				var myTabs = document.querySelectorAll("ul.nav-tabs > li");
 				function myTabClicks(tabClickEvent) {
@@ -248,6 +329,54 @@
 					myTabs[i].addEventListener("click", myTabClicks);
 				}
 			});
+
+			/**
+	Normal Values: (red flag outside normal)
+		- Temp: 97.6-99.6 
+		- Pulse: 60-100
+		- Resp: 12-20
+		- Oxygen Saturation: >=90
+		- BP: 90-150 / 50-90
+				 */
+			const validateVitalSign = (event) => {
+				let inputId = event.target.id;
+				let value = Number(event.target.value);
+				if (!value) {
+					event.target.classList.remove("abnormal");
+					return;
+				}
+
+				let inRange = true;
+
+				switch (inputId) {
+					case "bp-sys":
+						inRange = value >= 90 && value <= 150;
+						break;
+					case "bp-dia":
+						inRange = value >= 50 && value <= 90;
+						break;
+					case "temperature":
+						inRange = value >= 97.6 && value <= 99.6;
+						break;
+					case "pulse":
+						inRange = value >= 60 && value <= 100;
+						break;
+					case "o2":
+						inRange = value >= 90;
+						break;
+					case "respirations":
+						inRange = value >= 12 && value <= 20;
+						break;
+
+					default:
+						break;
+				}
+				if (inRange) {
+					event.target.classList.remove("abnormal");
+				} else {
+					event.target.classList.add("abnormal");
+				}
+			};
 
 			const patientData = [
 				{

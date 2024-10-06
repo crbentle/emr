@@ -243,9 +243,9 @@ option:not(:first-of-type) {
 
 /* Grid Test */
 
-.vitals-grid-row {
+.vital-sign-grid-row {
 	display: grid;
-	grid-template-columns: [first] 2fr [line2] 1fr [line3] 1fr [col4-start] 1fr [five] 1.2fr [end];
+	grid-template-columns: [first] 2fr [line2] 1fr [line3] 1fr [col4-start] 1fr [five] 1fr [end];
 	column-gap: 5px;
 	align-items: center;
 	justify-items: center;
@@ -253,15 +253,15 @@ option:not(:first-of-type) {
 	max-width: 600px;
 }
 
-.vitals-grid-row > div {
+.vital-sign-grid-row > div {
 	padding: 3px 0;
 }
 
-.vitals-label {
+.vital-sign-label {
 	justify-self: start;
 	font-weight: bold;
 }
-.vitals-input {
+.vital-sign-input {
 	justify-self: end;
 	border-left: 1px solid gray;
 	/* padding-left: 10px; */
@@ -269,8 +269,11 @@ option:not(:first-of-type) {
 	text-align: right;
 
 	input[size="3"] {
-		width: 3ch;
+		width: 5ch;
 	}
+}
+.vital-input-container {
+	padding-left: 10px;
 }
 /* End Grid Test */
 
@@ -280,7 +283,7 @@ option:not(:first-of-type) {
 	/* font-weight: normal; */
 }
 
-.vitals-table {
+.vital-sign-table {
 	width: 100%;
 	max-width: 600px;
 
@@ -296,10 +299,21 @@ form {
 	margin-top: 0.5em;
 }
 
+input {
+    width: 100%;
+    box-sizing: border-box;
+	text-align: center;
+}
+
 input[type="number"][size="3"] {
 	width: 3em;
 }
 input::placeholder {
 	opacity: 0.8;
 	font-size: 0.8em;
+}
+
+.abnormal {
+	background-color: red;
+	font-weight: bold;
 }
