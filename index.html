@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Flowsheets</title>
+		<link rel="stylesheet" type="text/css" href="styles.css" />
+	</head>
+	<body>
+		<div class="app">
+			<!-- Sign-in -->
+			<div class="view clearfix" id="view-signin">
+				<h1 id="login">Login</h1>
+				<form id="login-form" autocomplete="off">
+					<label for="username"><b>Username</b></label>
+					<input type="text" placeholder="Enter Username" name="username" required />
+
+					<label for="password"><b>Password</b></label>
+					<input type="password" placeholder="Enter Password" name="password" required />
+
+					<button type="submit" class="btn btn-blue">Login</button>
+				</form>
+			</div>
+
+			<!-- Patient Search-->
+			<div class="view" id="view-patient-search">
+				<h1>Patient Search</h1>
+				<select id="patient-select">
+					<option value="" disabled selected hidden>Select a patient</option>
+					<!-- <option value disabled> </option> -->
+					<!-- <option value disabled>—————————————</option> -->
+				</select>
+			</div>
+
+			<!-- Patient chart -->
+			<div class="view active" id="view-patient-chart">
+				<!-- Patient Info card -->
+				<div id="patient-info">
+					<div id="patient-title">
+						<span id="patient-name">Last, First (MRN)</span>
+						<button class="btn btn-blue" id="new-patient-btn">Change Patient</button>
+					</div>
+
+					<div>Gender: <span id="gender">Female</span></div>
+					<div>DOB: <span id="dob">1/1/1901</span></div>
+					<div>Age: <span id="age">123</span></div>
+				</div>
+
+				<div class="container--tabs">
+					<section class="row">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#tab-1">Vital Signs</a></li>
+							<li class=""><a href="#tab-2">Intake & Outake</a></li>
+							<li class=""><a href="#tab-3">ADL</a></li>
+						</ul>
+						<div class="tab-content">
+							<div id="tab-1" class="tab-pane active">
+								<span
+									class="glyphicon glyphicon-leaf glyphicon--home--feature two columns text-center"
+								></span>
+								<span class="col-md-10">
+									<form id="vital-sign-form">
+										<div class="vitals-grid-row">
+											<div></div>
+											<div>10/2/2024</div>
+											<div>10/3/2024</div>
+											<div>10/4/2024</div>
+											<div class="vitals-input">10/5/2024</div>
+										</div>
+										<hr style="margin: 0;" />
+										<div class="vitals-grid-row">
+											<div class="vitals-label">Blood Pressure</div>
+											<div id="col2">120/80</div>
+											<div id="col3">120/80</div>
+											<div id="col4">120/80</div>
+											<div class="vitals-input">
+												<div class="vital-input-container">
+																						
+													<input id="bp-sys" name="bp-sys" size="3" maxlength="3">
+													<span>/</span>
+													<input name="bp-dia" size="3" maxlength="3" >
+												</div>
+								
+											</div>
+										</div>
+										<div class="vitals-grid-row">
+											<div class="vitals-label">Temperature (F)</div>
+											<div>99</div>
+											<div>99</div>
+											<div>99</div>
+											<div class="vitals-input">
+												<div class="vital-input-container">
+																						
+													<input id="temperature" name="temperature" size="3" maxlength="3">
+												</div>
+								
+											</div>
+										</div>
+									</form>
+								</span>
+							</div>
+							<div id="tab-2" class="tab-pane">
+								<span
+									class="glyphicon glyphicon-fire glyphicon--home--feature two columns text-center"
+								></span>
+								<span class="col-md-10">
+									<h3>Feature 2</h3>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								</span>
+							</div>
+							<div id="tab-3" class="tab-pane">
+								<span
+									class="glyphicon glyphicon-tint glyphicon--home--feature two columns text-center"
+								></span>
+								<span class="col-md-10">
+									<h3>Feature 3</h3>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								</span>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<div style="display: none">
+				<button class="btn">Button 1</button>
+				<button class="btn">Button 2</button>
+
+				<div class="container--tabs">
+					<section class="row">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#tab-1">Vital Signs</a></li>
+							<li class=""><a href="#tab-2">Intake & Outake</a></li>
+							<li class=""><a href="#tab-3">ADL</a></li>
+						</ul>
+						<div class="tab-content">
+							<div id="tab-1" class="tab-pane active">
+								<span
+									class="glyphicon glyphicon-leaf glyphicon--home--feature two columns text-center"
+								></span>
+								<span class="col-md-10">
+									<h3>Feature 1</h3>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								</span>
+							</div>
+							<div id="tab-2" class="tab-pane">
+								<span
+									class="glyphicon glyphicon-fire glyphicon--home--feature two columns text-center"
+								></span>
+								<span class="col-md-10">
+									<h3>Feature 2</h3>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								</span>
+							</div>
+							<div id="tab-3" class="tab-pane">
+								<span
+									class="glyphicon glyphicon-tint glyphicon--home--feature two columns text-center"
+								></span>
+								<span class="col-md-10">
+									<h3>Feature 3</h3>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								</span>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+		<script>
+			window.addEventListener("DOMContentLoaded", function () {
+				function loginSubmit(event) {
+					event.preventDefault();
+					showView("patient-search");
+				}
+
+				function showView(viewName) {
+					const views = document.getElementsByClassName("view");
+					for (let view of views) {
+						if (view.id === `view-${viewName}`) {
+							view.classList.add("active");
+						} else {
+							view.classList.remove("active");
+						}
+					}
+				}
+
+				function displayPatientInfo(mrn) {
+					const patient = patientData.find((p) => p.mrn === mrn);
+					// const patientInfoDiv = document.getElementById("patient-info");
+					if (!patient) {
+						// patientInfoDiv.classList.add("hidden");
+						return;
+					}
+
+					showView("patient-chart");
+					document.getElementById("patient-select").selectedIndex = 0;
+					document.getElementById("patient-info").classList.remove("hidden");
+
+					const displayName = `${patient.lastName}, ${patient.firstName} (${patient.mrn})`;
+					document.getElementById("patient-name").textContent = displayName;
+					document.getElementById("gender").textContent = patient.gender;
+					document.getElementById("dob").textContent = patient.dateOfBirth;
+					document.getElementById("age").textContent = patient.age;
+				}
+
+				function buildPatientSelect() {
+					const select = document.getElementById("patient-select");
+					patientData.forEach((patient) => {
+						const option = document.createElement("option");
+						option.value = patient.mrn;
+						option.text = `${patient.lastName}, ${patient.firstName} (${patient.dateOfBirth})`;
+						select.add(option);
+					});
+
+					select.addEventListener("change", (event) => {
+						displayPatientInfo(event.target.value);
+					});
+				}
+
+				document.getElementById("login-form").addEventListener("submit", loginSubmit);
+				buildPatientSelect();
+
+				document.getElementById("new-patient-btn").addEventListener("click", () => {
+					showView("patient-search");
+					const patientInfoDiv = document.getElementById("patient-info");
+					patientInfoDiv.classList.add("hidden");
+				});
+
+				// store tabs variable
+				var myTabs = document.querySelectorAll("ul.nav-tabs > li");
+				function myTabClicks(tabClickEvent) {
+					for (var i = 0; i < myTabs.length; i++) {
+						myTabs[i].classList.remove("active");
+					}
+					var clickedTab = tabClickEvent.currentTarget;
+					clickedTab.classList.add("active");
+					tabClickEvent.preventDefault();
+					var myContentPanes = document.querySelectorAll(".tab-pane");
+					for (i = 0; i < myContentPanes.length; i++) {
+						myContentPanes[i].classList.remove("active");
+					}
+					var anchorReference = tabClickEvent.target;
+					var activePaneId = anchorReference.getAttribute("href");
+					var activePane = document.querySelector(activePaneId);
+					activePane.classList.add("active");
+				}
+				for (i = 0; i < myTabs.length; i++) {
+					myTabs[i].addEventListener("click", myTabClicks);
+				}
+			});
+
+			const patientData = [
+				{
+					firstName: "Maureene",
+					lastName: "Dulinty",
+					mrn: "6947012287",
+					gender: "Female",
+					dateOfBirth: "5/1/1946",
+					age: 78,
+				},
+				{
+					firstName: "Lindie",
+					lastName: "Keepe",
+					mrn: "0189267798",
+					gender: "Female",
+					dateOfBirth: "10/28/1933",
+					age: 91,
+				},
+				{
+					firstName: "Antonella",
+					lastName: "McCurry",
+					mrn: "8748056995",
+					gender: "Male",
+					dateOfBirth: "6/7/1949",
+					age: 75,
+				},
+				{
+					firstName: "Sayre",
+					lastName: "Feaster",
+					mrn: "9347946753",
+					gender: "Male",
+					dateOfBirth: "11/23/1936",
+					age: 88,
+				},
+				{
+					firstName: "Dina",
+					lastName: "Lucas",
+					mrn: "7208551979",
+					gender: "Female",
+					dateOfBirth: "11/6/1938",
+					age: 86,
+				},
+				{
+					firstName: "Conn",
+					lastName: "Sheal",
+					mrn: "4611028917",
+					gender: "Male",
+					dateOfBirth: "9/19/1934",
+					age: 90,
+				},
+				{
+					firstName: "Blakeley",
+					lastName: "Gurney",
+					mrn: "2385707373",
+					gender: "Female",
+					dateOfBirth: "9/22/1931",
+					age: 93,
+				},
+				{
+					firstName: "Sharla",
+					lastName: "Dashwood",
+					mrn: "1567391443",
+					gender: "Female",
+					dateOfBirth: "1/22/1958",
+					age: 66,
+				},
+				{
+					firstName: "Derk",
+					lastName: "Galley",
+					mrn: "5705674619",
+					gender: "Male",
+					dateOfBirth: "3/1/1950",
+					age: 74,
+				},
+				{
+					firstName: "Gayle",
+					lastName: "Worcs",
+					mrn: "2496219881",
+					gender: "Female",
+					dateOfBirth: "6/7/1955",
+					age: 69,
+				},
+			];
+		</script>
+	</body>
+</html>

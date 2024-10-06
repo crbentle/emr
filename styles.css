@@ -1,0 +1,305 @@
+body {
+	background-color: #f6f6f6;
+	color: #232222;
+	margin: 10px;
+}
+
+.app {
+	margin: 0 auto;
+	max-width: 1200px;
+}
+
+.view {
+	display: none;
+	background-color: #efefef;
+	border: 1px black solid;
+	box-shadow: 5px 5px 5px 0px #a2a2a2;
+	border-radius: 10px;
+	padding: 20px;
+}
+
+.view.active {
+	display: block;
+}
+
+.view h1 {
+	margin-top: 0;
+}
+
+#view-signin {
+	background-color: #d7d7d7;
+	max-width: 400px;
+	margin: 10% auto;
+}
+
+#view-signin input {
+	width: 100%;
+	border-radius: 5px;
+	border-width: 1px;
+	padding: 5px;
+	margin: 5px 0;
+}
+
+#view-signin button {
+	margin-top: 10px;
+	float: right;
+	min-width: 80px;
+}
+
+#view-signin button:focus {
+	outline: 1px #252525 solid;
+}
+
+#view-patient-chart {
+	padding: 0;
+}
+
+#login {
+	margin-top: 0;
+	text-align: center;
+}
+
+select {
+	padding: 10px;
+	font-size: 1.5em;
+	color: gray;
+}
+
+option:not(:first-of-type) {
+	color: #232222;
+}
+
+#patient-info {
+	padding: 0 10px;
+}
+
+#patient-info #patient-title {
+	/* width: 100%; */
+	display: block;
+	margin: 0 -10px;
+	background-color: #b2b2b2;
+	padding: 5px 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+#patient-info #patient-name {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+#new-patient-btn {
+	float: right;
+	font-size: 0.8em;
+	padding: 0 5px;
+}
+
+#patient-info div {
+	display: inline-block;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+#patient-info span {
+	margin-right: 15px;
+}
+
+.hidden {
+	display: none;
+}
+
+.clearfix::after {
+	content: " ";
+	display: table;
+	clear: both;
+}
+/*  */
+.btn.btn-blue {
+	background-color: #5e92d0;
+	color: white;
+}
+.btn.btn-blue:hover {
+	background-color: #3c7fd0;
+}
+.btn {
+	appearance: none;
+	background-color: #fafbfc;
+	border: 1px solid rgba(27, 31, 35, 0.15);
+	border-radius: 6px;
+	box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+	box-sizing: border-box;
+	color: #24292e;
+	cursor: pointer;
+	font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji";
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 20px;
+	padding: 6px 16px;
+	position: relative;
+	transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+	white-space: nowrap;
+	word-wrap: break-word;
+}
+
+.btn:hover {
+	background-color: #f3f4f6;
+	text-decoration: none;
+	transition-duration: 0.1s;
+}
+
+.btn:disabled {
+	background-color: #fafbfc;
+	border-color: rgba(27, 31, 35, 0.15);
+	color: #959da5;
+	cursor: default;
+}
+
+.btn:active {
+	background-color: #edeff2;
+	box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+	transition: none 0s;
+}
+
+.btn:focus {
+	outline: 1px transparent;
+}
+
+/* https://codepen.io/inupurnomo/pen/MWWRmQr */
+/* https://www.w3schools.com/howto/howto_js_tabs.asp */
+/* https://codepen.io/serhatbek/pen/bGyVLpM */
+/* https://codepen.io/carolyngreenough/pen/MawmVb */
+.container--tabs {
+	margin: 1rem 0.5rem;
+
+	.nav-tabs {
+		/* float: left; */
+		/* width: 100%; */
+		margin: 0;
+		list-style-type: none;
+		border-bottom: 2px solid #ddd;
+		/* padding: 0; */
+		height: 2.65em;
+
+		> li {
+			float: left;
+			margin-bottom: -1px;
+
+			> a {
+				float: left;
+				margin-right: 2px;
+				line-height: 1.42857143;
+				padding: 10px;
+				border: 1px solid transparent;
+				border-radius: 4px 4px 0 0;
+				text-decoration: none;
+				color: #111;
+				background-color: rgb(211 211 211);
+
+				&:hover {
+					border-color: #eee #eee #ddd;
+				}
+			}
+
+			&.active {
+				> a,
+				> a:hover,
+				> a:focus {
+					color: #555;
+					/* font-weight: bold; */
+					text-shadow: 1px 0px 0px black;
+					cursor: default;
+					background-color: rgb(159 178 114);
+					border: 1px solid #ddd;
+					border-bottom-color: transparent;
+				}
+			}
+		}
+	}
+
+	.tab-content {
+		/* float: left; */
+		width: 100%;
+		/* border: 2px solid rgb(159 178 114);
+		border-radius: 8px;
+		overflow: hidden; */
+		position: relative;
+
+		> .tab-pane {
+			display: none;
+
+			> .active {
+				display: block;
+				padding: 2.5% 3.5%;
+				background-color: #efefef;
+				font-weight: bold;
+			}
+		}
+
+		> .active {
+			display: block;
+		}
+	}
+}
+
+/* Grid Test */
+
+.vitals-grid-row {
+	display: grid;
+	grid-template-columns: [first] 2fr [line2] 1fr [line3] 1fr [col4-start] 1fr [five] 1.2fr [end];
+	column-gap: 5px;
+	align-items: center;
+	justify-items: center;
+	/* padding: 3px 0; */
+	max-width: 600px;
+}
+
+.vitals-grid-row > div {
+	padding: 3px 0;
+}
+
+.vitals-label {
+	justify-self: start;
+	font-weight: bold;
+}
+.vitals-input {
+	justify-self: end;
+	border-left: 1px solid gray;
+	/* padding-left: 10px; */
+	width: 100%;
+	text-align: right;
+
+	input[size="3"] {
+		width: 3ch;
+	}
+}
+/* End Grid Test */
+
+#vital-sign-form label {
+	width: 150px;
+	display: inline-block;
+	/* font-weight: normal; */
+}
+
+.vitals-table {
+	width: 100%;
+	max-width: 600px;
+
+	th {
+		text-align: left;
+	}
+	td {
+		/* opacity: .8; */
+	}
+}
+
+form {
+	margin-top: 0.5em;
+}
+
+input[type="number"][size="3"] {
+	width: 3em;
+}
+input::placeholder {
+	opacity: 0.8;
+	font-size: 0.8em;
+}
