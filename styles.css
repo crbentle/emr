@@ -89,12 +89,6 @@ option:not(:first-of-type) {
 	font-weight: bold;
 }
 
-#new-patient-btn {
-	float: right;
-	font-size: 0.8em;
-	padding: 0 5px;
-}
-
 #patient-info div {
 	display: inline-block;
 	padding-top: 5px;
@@ -121,6 +115,13 @@ option:not(:first-of-type) {
 .btn.btn-blue:hover {
 	background-color: #3c7fd0;
 }
+.btn.btn-green {
+	background-color: #3fb855;
+	color: white;
+}
+.btn.btn-green:hover {
+	background-color: #309d44;
+}
 .btn {
 	appearance: none;
 	background-color: #fafbfc;
@@ -140,6 +141,10 @@ option:not(:first-of-type) {
 	transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
 	white-space: nowrap;
 	word-wrap: break-word;
+}
+.btn-small {
+	font-size: 0.8em;
+    padding: 0 5px;
 }
 
 .btn:hover {
@@ -302,6 +307,11 @@ option:not(:first-of-type) {
 	}
 }
 
+#vital-sign-save-btn {
+	display: flex;
+	margin: 10px 10px 5px auto;
+}
+
 form {
 	margin-top: 0.5em;
 }
@@ -365,4 +375,8 @@ input::placeholder {
 .mx-2 {
 	margin-left: 2px;
 	margin-right: 2px;
+}
+
+.float-right {
+	float: right;
 }

@@ -18,7 +18,7 @@
 					<label for="password"><b>Password</b></label>
 					<input type="password" placeholder="Enter Password" name="password" required />
 
-					<button type="submit" class="btn btn-blue">Login</button>
+					<button type="submit" class="btn btn-blue btn-small">Login</button>
 				</form>
 			</div>
 
@@ -26,9 +26,7 @@
 			<div class="view active" id="view-patient-search">
 				<h1>Patient Search</h1>
 				<div id="patient-cards-wrapper">
-					<div id="patient-cards">
-					</div>
-
+					<div id="patient-cards"></div>
 				</div>
 			</div>
 
@@ -38,7 +36,7 @@
 				<div id="patient-info">
 					<div id="patient-title">
 						<span id="patient-name">Last, First (MRN)</span>
-						<button class="btn btn-blue" id="new-patient-btn">Change Patient</button>
+						<button class="btn btn-blue btn-small float-right" id="new-patient-btn">Change Patient</button>
 					</div>
 
 					<div>Gender: <span id="gender">Female</span></div>
@@ -60,22 +58,30 @@
 								></span>
 								<span class="col-md-10">
 									<form id="vital-sign-form" autocomplete="off">
-										<div class="vital-sign-grid-row">
+										<input type="hidden" id="vital-sign-mrn" name="vital-sign-mrn" />
+										<div class="vital-sign-grid-row" data-vital-type="date">
 											<div></div>
-											<div>10/2/2024</div>
-											<div>10/3/2024</div>
-											<div>10/4/2024</div>
-											<div class="vital-sign-input">10/5/2024</div>
+											<div class="vital-sign-history">10/2/2024</div>
+											<div class="vital-sign-history">10/3/2024</div>
+											<div class="vital-sign-history">10/4/2024</div>
+											<div class="vital-sign-input" id="vital-sign-today">10/5/2024</div>
 										</div>
 										<hr style="margin: 0" />
 										<div class="vital-sign-grid-row" data-vital-type="bp">
 											<div class="vital-sign-label">Blood Pressure</div>
-											<div id="col2">120/80</div>
-											<div id="col3">120/80</div>
-											<div id="col4">120/80</div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
 											<div class="vital-sign-input">
 												<div class="vital-input-container">
-													<input id="bp-sys" name="bp-sys" size="3" maxlength="3" />
+													<input
+														id="bp-sys"
+														name="bp-sys"
+														size="3"
+														maxlength="3"
+														inputmode="numeric"
+														pattern="[0-9]{0,3}"
+													/>
 													<span class="mx-2">/</span>
 													<input id="bp-dia" name="bp-dia" size="3" maxlength="3" />
 												</div>
@@ -83,9 +89,9 @@
 										</div>
 										<div class="vital-sign-grid-row" data-vital-type="temperature">
 											<div class="vital-sign-label">Temperature (F)</div>
-											<div>99</div>
-											<div>99</div>
-											<div>99</div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
 											<div class="vital-sign-input">
 												<div class="vital-input-container">
 													<input id="temperature" name="temperature" maxlength="4" />
@@ -94,9 +100,9 @@
 										</div>
 										<div class="vital-sign-grid-row" data-vital-type="pulse">
 											<div class="vital-sign-label">Heart Rate</div>
-											<div></div>
-											<div></div>
-											<div></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
 											<div class="vital-sign-input">
 												<div class="vital-input-container">
 													<input id="pulse" name="pulse" maxlength="3" />
@@ -105,9 +111,9 @@
 										</div>
 										<div class="vital-sign-grid-row" data-vital-type="o2">
 											<div class="vital-sign-label">Oxygen Saturation</div>
-											<div></div>
-											<div></div>
-											<div></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
 											<div class="vital-sign-input">
 												<div class="vital-input-container">
 													<input id="o2" name="o2" maxlength="3" />
@@ -116,9 +122,9 @@
 										</div>
 										<div class="vital-sign-grid-row" data-vital-type="respirations">
 											<div class="vital-sign-label">Respirations</div>
-											<div></div>
-											<div></div>
-											<div></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
 											<div class="vital-sign-input">
 												<div class="vital-input-container">
 													<input id="respirations" name="respirations" maxlength="3" />
@@ -127,9 +133,9 @@
 										</div>
 										<div class="vital-sign-grid-row" data-vital-type="pain">
 											<div class="vital-sign-label">Pain (0-10)</div>
-											<div></div>
-											<div></div>
-											<div></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
 											<div class="vital-sign-input">
 												<div class="vital-input-container">
 													<input id="pain" name="pain" maxlength="2" />
@@ -138,9 +144,9 @@
 										</div>
 										<div class="vital-sign-grid-row" data-vital-type="height">
 											<div class="vital-sign-label">Height</div>
-											<div></div>
-											<div></div>
-											<div></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
 											<div class="vital-sign-input">
 												<div class="vital-input-container">
 													<input
@@ -163,15 +169,22 @@
 										</div>
 										<div class="vital-sign-grid-row" data-vital-type="weight">
 											<div class="vital-sign-label">Weight (lbs)</div>
-											<div></div>
-											<div></div>
-											<div></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
+											<div class="vital-sign-history"></div>
 											<div class="vital-sign-input">
 												<div class="vital-input-container">
 													<input id="weight" name="weight" maxlength="3" />
 												</div>
 											</div>
 										</div>
+										<button
+											type="submit"
+											class="btn btn-green"
+											id="vital-sign-save-btn"
+										>
+											Save
+										</button>
 									</form>
 								</span>
 							</div>
@@ -198,52 +211,10 @@
 				</div>
 			</div>
 
-			
 			<div style="display: none">
-				&#128100; &#x1F464;
-				&#x1f468; &#x1f469;
-	
-				<img src="./img/bust-in-silhouette.svg" class="patient-img">
-				<button class="btn">Button 1</button>
-				<button class="btn">Button 2</button>
+				&#128100; &#x1F464; &#x1f468; &#x1f469;
 
-				<div class="container--tabs">
-					<section class="row">
-						<ul class="nav nav-tabs">
-							<li class="active"><a href="#tab-1">Vital Signs</a></li>
-							<li class=""><a href="#tab-2">Intake & Outake</a></li>
-							<li class=""><a href="#tab-3">ADL</a></li>
-						</ul>
-						<div class="tab-content">
-							<div id="tab-1" class="tab-pane active">
-								<span
-									class="glyphicon glyphicon-leaf glyphicon--home--feature two columns text-center"
-								></span>
-								<span class="col-md-10">
-									<h3>Feature 1</h3>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								</span>
-							</div>
-							<div id="tab-2" class="tab-pane">
-								<span
-									class="glyphicon glyphicon-fire glyphicon--home--feature two columns text-center"
-								></span>
-								<span class="col-md-10">
-									<h3>Feature 2</h3>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								</span>
-							</div>
-							<div id="tab-3" class="tab-pane">
-								<span
-									class="glyphicon glyphicon-tint glyphicon--home--feature two columns text-center"
-								></span>
-								<span class="col-md-10">
-									<h3>Feature 3</h3>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								</span>
-							</div>
-						</div>
-					</section>
+				<img src="./img/bust-in-silhouette.svg" class="patient-img" />
 				</div>
 			</div>
 		</div>
@@ -266,15 +237,12 @@
 				}
 
 				function displayPatientInfo(mrn) {
-					const patient = patientData.find((p) => p.mrn === mrn);
-					// const patientInfoDiv = document.getElementById("patient-info");
+					const patient = patientService.getPatient(mrn);
 					if (!patient) {
-						// patientInfoDiv.classList.add("hidden");
 						return;
 					}
 
 					showView("patient-chart");
-					// document.getElementById("patient-select").selectedIndex = 0;
 					document.getElementById("patient-info").classList.remove("hidden");
 
 					const displayName = `${patient.lastName}, ${patient.firstName} (${patient.mrn})`;
@@ -282,14 +250,87 @@
 					document.getElementById("gender").textContent = patient.gender;
 					document.getElementById("dob").textContent = patient.dateOfBirth;
 					document.getElementById("age").textContent = patient.age;
+
+					loadVitalSigns(patient);
+				}
+
+				function loadVitalSigns(patient) {
+					// reset the form and clear abnormal flags
+					const vitalSignForm = document.getElementById("vital-sign-form");
+					vitalSignForm.reset();
+					vitalSignForm.querySelectorAll("input").forEach((input) => {
+						input.classList.remove("abnormal");
+					});
+
+					document.getElementById("vital-sign-mrn").value = patient.mrn;
+					document.getElementById("vital-sign-today").innerHTML = new Date().toLocaleDateString();
+
+					// Get saved vital signs, ignoring any saved today
+					const lastMidnight = new Date().setHours(0, 0, 0, 0);
+					let vitalSigns = [...patientService.vitalSigns.load(patient.mrn)]
+						.filter((vitalSign) => {
+							return lastMidnight > vitalSign.date;
+						})
+						// Sort by date, oldest first
+						.sort((a, b) => b.date - a.date);
+
+					[...document.querySelectorAll("[data-vital-type]")]
+						.map((e) => e.dataset.vitalType)
+						.forEach((dataType) => displayVitalSignData(vitalSigns, dataType));
+				}
+
+				function displayVitalSignData(vitalSigns, dataType) {
+					// Fill from right to left in case we don't have 3 histories
+					let columns = [
+						...document.querySelectorAll(`[data-vital-type="${dataType}"] .vital-sign-history`),
+					].reverse();
+					for (let i = 0; i < columns.length; i++) {
+						if (vitalSigns?.length > i) {
+							columns[i].innerHTML = getVitalSignValueByDataType(vitalSigns[i], dataType);
+						} else {
+							columns[i].innerHTML = "";
+						}
+					}
+				}
+
+				/**
+				 * Get the vital sign value corresponding to the data type and
+				 * format the data for display, if needed.
+				 */
+				function getVitalSignValueByDataType(vitalSign, dataType) {
+					let value;
+					switch (dataType) {
+						case "date":
+							value = vitalSign.date && new Date(vitalSign.date).toLocaleDateString();
+							break;
+						case "bp":
+							if (vitalSign.bp) {
+								value = `${vitalSign.bp.sys || ""}/${vitalSign.bp.dia || ""}`;
+							}
+							break;
+						case "temperature":
+							value = vitalSign.temp;
+							break;
+						case "respirations":
+							value = vitalSign.resp;
+							break;
+						case "height":
+							if(vitalSign.height){
+								value = `${Math.floor(vitalSign.height / 12)}' ${vitalSign.height % 12}"`;
+							}
+							break;
+						default:
+							// dataType and JSON key are the same
+							value = vitalSign[dataType];
+					}
+					return value;
 				}
 
 				function buildPatientSelect() {
-
 					// patient cards
 					let patientCards = patientData.map((patient) => {
 						const card = document.createElement("div");
-						card.className = 'patient-card';
+						card.className = "patient-card";
 
 						const img = document.createElement("img");
 						img.className = "patient-img";
@@ -298,7 +339,9 @@
 
 						const name = document.createElement("div");
 						name.className = "bold";
-						name.appendChild(document.createTextNode(`${patient.lastName}, ${patient.firstName} (${patient.mrn})`));
+						name.appendChild(
+							document.createTextNode(`${patient.lastName}, ${patient.firstName} (${patient.mrn})`)
+						);
 						card.appendChild(name);
 
 						const dob = document.createElement("div");
@@ -306,25 +349,12 @@
 						card.appendChild(dob);
 
 						card.addEventListener("click", (event) => {
-						displayPatientInfo(patient.mrn);
-					});
+							displayPatientInfo(patient.mrn);
+						});
 						return card;
 					});
-					
 
-					document.getElementById("patient-cards")
-					.replaceChildren(...patientCards);
-					/*
-					<div class="patient-card">
-						<img src="./img/bust-in-silhouette.svg" class="patient-img">
-						<strong>
-								<span class="patient-name">Dulinty, Maureene (6947012287)</span>
-						
-
-						</strong>
-						<div class="patient-dob">12/11/1981</div>
-					</div>
-					*/
+					document.getElementById("patient-cards").replaceChildren(...patientCards);
 				}
 
 				document.getElementById("login-form").addEventListener("submit", loginSubmit);
@@ -336,31 +366,41 @@
 					patientInfoDiv.classList.add("hidden");
 				});
 
+				document.getElementById("vital-sign-form").addEventListener("submit", (evt) => {
+					evt.preventDefault();
+
+					patientService.vitalSigns.save(new FormData(document.getElementById("vital-sign-form")));
+				});
+
 				// Setup validation on vital-sign inputs
 				document.querySelectorAll(".vital-sign-input input").forEach((input) => {
 					input.addEventListener("blur", validateVitalSign);
+					input.addEventListener(
+						"input",
+						(event) => (event.target.value = event.target.value.replace(/\D/g, ""))
+					);
 				});
 
 				// store tabs variable
-				var myTabs = document.querySelectorAll("ul.nav-tabs > li");
-				function myTabClicks(tabClickEvent) {
-					for (var i = 0; i < myTabs.length; i++) {
-						myTabs[i].classList.remove("active");
-					}
-					var clickedTab = tabClickEvent.currentTarget;
-					clickedTab.classList.add("active");
+				const tabs = document.querySelectorAll("ul.nav-tabs > li");
+				function onTabClick(tabClickEvent) {
 					tabClickEvent.preventDefault();
-					var myContentPanes = document.querySelectorAll(".tab-pane");
-					for (i = 0; i < myContentPanes.length; i++) {
-						myContentPanes[i].classList.remove("active");
+					for (let i = 0; i < tabs.length; i++) {
+						tabs[i].classList.remove("active");
 					}
-					var anchorReference = tabClickEvent.target;
-					var activePaneId = anchorReference.getAttribute("href");
-					var activePane = document.querySelector(activePaneId);
+					const clickedTab = tabClickEvent.currentTarget;
+					clickedTab.classList.add("active");
+					const tabContentPanes = document.querySelectorAll(".tab-pane");
+					for (let i = 0; i < tabContentPanes.length; i++) {
+						tabContentPanes[i].classList.remove("active");
+					}
+					const anchorReference = tabClickEvent.target;
+					const activePaneId = anchorReference.getAttribute("href");
+					const activePane = document.querySelector(activePaneId);
 					activePane.classList.add("active");
 				}
-				for (i = 0; i < myTabs.length; i++) {
-					myTabs[i].addEventListener("click", myTabClicks);
+				for (let i = 0; i < tabs.length; i++) {
+					tabs[i].addEventListener("click", onTabClick);
 				}
 			});
 
@@ -411,89 +451,7 @@
 					event.target.classList.add("abnormal");
 				}
 			};
-
-			const patientData = [
-				{
-					firstName: "Maureene",
-					lastName: "Dulinty",
-					mrn: "6947012287",
-					gender: "Female",
-					dateOfBirth: "5/1/1946",
-					age: 78,
-				},
-				{
-					firstName: "Lindie",
-					lastName: "Keepe",
-					mrn: "0189267798",
-					gender: "Female",
-					dateOfBirth: "10/28/1933",
-					age: 91,
-				},
-				{
-					firstName: "Antonella",
-					lastName: "McCurry",
-					mrn: "8748056995",
-					gender: "Male",
-					dateOfBirth: "6/7/1949",
-					age: 75,
-				},
-				{
-					firstName: "Sayre",
-					lastName: "Feaster",
-					mrn: "9347946753",
-					gender: "Male",
-					dateOfBirth: "11/23/1936",
-					age: 88,
-				},
-				{
-					firstName: "Dina",
-					lastName: "Lucas",
-					mrn: "7208551979",
-					gender: "Female",
-					dateOfBirth: "11/6/1938",
-					age: 86,
-				},
-				{
-					firstName: "Conn",
-					lastName: "Sheal",
-					mrn: "4611028917",
-					gender: "Male",
-					dateOfBirth: "9/19/1934",
-					age: 90,
-				},
-				{
-					firstName: "Blakeley",
-					lastName: "Gurney",
-					mrn: "2385707373",
-					gender: "Female",
-					dateOfBirth: "9/22/1931",
-					age: 93,
-				},
-				{
-					firstName: "Sharla",
-					lastName: "Dashwood",
-					mrn: "1567391443",
-					gender: "Female",
-					dateOfBirth: "1/22/1958",
-					age: 66,
-				},
-				{
-					firstName: "Derk",
-					lastName: "Galley",
-					mrn: "5705674619",
-					gender: "Male",
-					dateOfBirth: "3/1/1950",
-					age: 74,
-				},
-				{
-					firstName: "Gayle",
-					lastName: "Worcs",
-					mrn: "2496219881",
-					gender: "Female",
-					dateOfBirth: "6/7/1955",
-					age: 69,
-				},
-			];
 		</script>
+		<script src="./js/patientData.js" />
 	</body>
 </html>
