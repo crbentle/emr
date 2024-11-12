@@ -144,7 +144,7 @@ option:not(:first-of-type) {
 }
 .btn-small {
 	font-size: 0.8em;
-    padding: 0 5px;
+	padding: 0 5px;
 }
 
 .btn:hover {
@@ -317,8 +317,8 @@ form {
 }
 
 input {
-    width: 100%;
-    box-sizing: border-box;
+	width: 100%;
+	box-sizing: border-box;
 	text-align: center;
 }
 
@@ -344,17 +344,17 @@ input::placeholder {
 
 #patient-cards {
 	display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
 	overflow: auto;
 }
 
 .patient-card {
 	/* width: 50%; */
-    border: 1px solid black;
-    border-radius: 8px;
-    background-color: #a9ceb1;
-    padding: 5px;
+	border: 1px solid black;
+	border-radius: 8px;
+	background-color: #a9ceb1;
+	padding: 5px;
 	cursor: pointer;
 }
 .patient-img {
@@ -365,12 +365,12 @@ input::placeholder {
 	/* border: 1px solid #d3d3d3; */
 	box-sizing: border-box;
 	float: left;
-    margin-right: 10px;
-  }
+	margin-right: 10px;
+}
 
-  .bold {
+.bold {
 	font-weight: bold;
-  }
+}
 
 .mx-2 {
 	margin-left: 2px;
@@ -379,4 +379,17 @@ input::placeholder {
 
 .float-right {
 	float: right;
+}
+
+.save-flash {
+	animation: savepulse 4s;
+}
+@keyframes savepulse {
+	0%,
+	100% {
+		background-color: transparent;
+	}
+	50% {
+		background-color: #efd957;
+	}
 }

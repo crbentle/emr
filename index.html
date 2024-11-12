@@ -265,12 +265,9 @@
 					document.getElementById("vital-sign-mrn").value = patient.mrn;
 					document.getElementById("vital-sign-today").innerHTML = new Date().toLocaleDateString();
 
-					// Get saved vital signs, ignoring any saved today
+					// Get saved vital signs
 					const lastMidnight = new Date().setHours(0, 0, 0, 0);
 					let vitalSigns = [...patientService.vitalSigns.load(patient.mrn)]
-						.filter((vitalSign) => {
-							return lastMidnight > vitalSign.date;
-						})
 						// Sort by date, oldest first
 						.sort((a, b) => b.date - a.date);
 
@@ -366,10 +363,26 @@
 					patientInfoDiv.classList.add("hidden");
 				});
 
+				function showSaveFlash() {
+					let savedFields = document.querySelectorAll('.vital-sign-grid-row .vital-sign-history:nth-of-type(4)');
+						savedFields.forEach((el) => {
+							el.classList.add('save-flash');
+							el.addEventListener("webkitAnimationEnd", ()=>el.classList.remove('save-flash'),false);
+							el.addEventListener("animationend", ()=>el.classList.remove('save-flash'),false);
+							el.addEventListener("oanimationend", ()=>el.classList.remove('save-flash'),false);
+						});
+				}
+
 				document.getElementById("vital-sign-form").addEventListener("submit", (evt) => {
 					evt.preventDefault();
 
-					patientService.vitalSigns.save(new FormData(document.getElementById("vital-sign-form")));
+					const formData = new FormData(document.getElementById("vital-sign-form"));
+					patientService.vitalSigns.save(formData);
+
+					const mrn = formData.get("vital-sign-mrn");
+					loadVitalSigns(patientService.getPatient(mrn));
+
+					showSaveFlash();
 				});
 
 				// Setup validation on vital-sign inputs
