@@ -295,13 +295,13 @@
 				 * format the data for display, if needed.
 				 */
 				function getVitalSignValueByDataType(vitalSign, dataType) {
-					let value;
+					let value = '';
 					switch (dataType) {
 						case "date":
 							value = vitalSign.date && new Date(vitalSign.date).toLocaleDateString();
 							break;
 						case "bp":
-							if (vitalSign.bp) {
+							if (vitalSign.bp?.sys || vitalSign.bp?.dia) {
 								value = `${vitalSign.bp.sys || ""}/${vitalSign.bp.dia || ""}`;
 							}
 							break;
