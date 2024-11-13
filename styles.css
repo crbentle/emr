@@ -303,6 +303,12 @@ option:not(:first-of-type) {
     transform: translate(1px, 1px);
 }
 
+.vital-sign-history-time {
+    font-size: small;
+    display: block;
+    text-align: center;
+}
+
 form {
 	margin-top: 0.5em;
 }

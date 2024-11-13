@@ -298,7 +298,13 @@
 					let value = '';
 					switch (dataType) {
 						case "date":
-							value = vitalSign.date && new Date(vitalSign.date).toLocaleDateString();
+							if(vitalSign.date){
+								const date = new Date(vitalSign.date);
+								value = `
+								<div>${date.toLocaleDateString()}
+									<span class="vital-sign-history-time">${date.toTimeString().substr(0,5)}</span>	
+								</div>`
+							}
 							break;
 						case "bp":
 							if (vitalSign.bp?.sys || vitalSign.bp?.dia) {

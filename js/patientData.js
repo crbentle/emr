@@ -1,3 +1,8 @@
+/**
+ * TODO:
+ * - Add column edit icon (displays inline form and disables normal edit column)
+ */
+
 const baseDate = new Date();
 const dateMinusOne = new Date(baseDate).setDate(baseDate.getDate() - 1);
 const dateMinusTwo = new Date(baseDate).setDate(baseDate.getDate() - 2);
@@ -165,19 +170,10 @@ function saveVitalSigns(formData) {
 	};
 
 	let vitalSignHistory = getVitalSigns(mrn);
-
-	/**
-	 * Delete the last history entry if it has the same date as the form data.
-	 *  We only want to save one entry per day.
-	 */
-	let lastMidnight = new Date(vitalSigns.date).setHours(0, 0, 0, 0);
-	let lastEntryDate = vitalSignHistory?.[vitalSignHistory.length - 1]?.date;
-	if (lastEntryDate && lastEntryDate > lastMidnight) {
-		vitalSignHistory.pop();
-	}
-
 	vitalSignHistory.push(vitalSigns);
-	vitalSignHistory = vitalSignHistory.slice(0, 4);
+	// Only keep the last 3 histories
+	vitalSignHistory = vitalSignHistory.slice(-3);
+	
 	storeData(mrn, vitalSignHistory);
 	return true;
 }
