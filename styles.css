@@ -292,24 +292,15 @@ option:not(:first-of-type) {
 #vital-sign-form label {
 	width: 150px;
 	display: inline-block;
-	/* font-weight: normal; */
-}
-
-.vital-sign-table {
-	width: 100%;
-	max-width: 600px;
-
-	th {
-		text-align: left;
-	}
-	td {
-		/* opacity: .8; */
-	}
 }
 
 #vital-sign-save-btn {
 	display: flex;
 	margin: 10px 10px 5px auto;
+}
+
+#vital-sign-save-btn:active {
+    transform: translate(1px, 1px);
 }
 
 form {
