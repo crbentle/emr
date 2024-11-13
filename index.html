@@ -367,9 +367,7 @@
 					let savedFields = document.querySelectorAll('.vital-sign-grid-row .vital-sign-history:nth-of-type(4)');
 						savedFields.forEach((el) => {
 							el.classList.add('save-flash');
-							el.addEventListener("webkitAnimationEnd", ()=>el.classList.remove('save-flash'),false);
 							el.addEventListener("animationend", ()=>el.classList.remove('save-flash'),false);
-							el.addEventListener("oanimationend", ()=>el.classList.remove('save-flash'),false);
 						});
 				}
 
@@ -377,7 +375,10 @@
 					evt.preventDefault();
 
 					const formData = new FormData(document.getElementById("vital-sign-form"));
-					patientService.vitalSigns.save(formData);
+					let success = patientService.vitalSigns.save(formData);
+					if(!success){
+						return;
+					}
 
 					const mrn = formData.get("vital-sign-mrn");
 					loadVitalSigns(patientService.getPatient(mrn));

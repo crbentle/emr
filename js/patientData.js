@@ -139,6 +139,14 @@ const patientService = {
 };
 
 function saveVitalSigns(formData) {
+	// Don't save if everything is empty
+	let fieldsWithValues = Array.from(formData.entries())
+		.filter(([key, value]) => key !== 'vital-sign-mrn' && !!value);
+	
+	if(!fieldsWithValues.length){
+		return false;
+	}
+	
     const mrn = formData.get("vital-sign-mrn");
 
 	const vitalSigns = {
@@ -171,6 +179,7 @@ function saveVitalSigns(formData) {
 	vitalSignHistory.push(vitalSigns);
 	vitalSignHistory = vitalSignHistory.slice(0, 4);
 	storeData(mrn, vitalSignHistory);
+	return true;
 }
 
 /**
