@@ -271,7 +271,18 @@ option:not(:first-of-type) {
 .vital-sign-label {
 	justify-self: start;
 	font-weight: bold;
+	white-space: nowrap;
 }
+
+.vital-sign-labels {
+    justify-self: start;
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+}
+
 .vital-sign-input {
 	justify-self: end;
 	border-left: 1px solid gray;
@@ -307,6 +318,34 @@ option:not(:first-of-type) {
     font-size: small;
     display: block;
     text-align: center;
+}
+
+.vs-table {
+    width: 100%;
+    border: 0;
+    border-collapse: collapse;
+}
+
+.vs-table th:not(:first-child) {
+    width: 19%;
+    font-weight: normal;
+}
+
+.vs-table thead {
+    border-bottom: 1px solid black;
+}
+
+.vs-table tr td:last-of-type, .vs-table tr th:last-of-type {
+    border-left: 1px solid black;
+    padding: 3px 0;
+}
+
+.vs-table td {
+    text-align: center;
+}
+
+.vs-table .vital-sign-label {
+    text-align: left;
 }
 
 form {
