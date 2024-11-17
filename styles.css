@@ -340,6 +340,12 @@ option:not(:first-of-type) {
     padding: 3px 0;
 }
 
+.vs-time {
+    font-size: small;
+    display: block;
+    text-align: center;
+}
+
 .vs-table td {
     text-align: center;
 }

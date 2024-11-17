@@ -47,286 +47,22 @@
 				<div class="container--tabs">
 					<section class="row">
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="#tab-1">Vital Signs</a></li>
+							<li class="active"><a href="#vs-tab">Vital Signs</a></li>
 							<li class=""><a href="#tab-2">Intake & Outake</a></li>
 							<li class=""><a href="#tab-3">ADL</a></li>
 						</ul>
 						<div class="tab-content">
-							<div id="tab-1" class="tab-pane active">
-								<span
-									class="glyphicon glyphicon-leaf glyphicon--home--feature two columns text-center"
-								></span>
-								<span class="col-md-10">
-									<form id="vital-sign-form" autocomplete="off">
-										<input type="hidden" id="vital-sign-mrn" name="vital-sign-mrn" />
-										<div class="vital-sign-grid-row" data-vital-type="date">
-											<div></div>
-											<div class="vital-sign-history">10/2/2024</div>
-											<div class="vital-sign-history">10/3/2024</div>
-											<div class="vital-sign-history">10/4/2024</div>
-											<div class="vital-sign-input" id="vital-sign-today">10/5/2024</div>
-										</div>
-										<hr style="margin: 0" />
-										<div class="vital-sign-grid-row" data-vital-type="bp">
-											<div class="vital-sign-label">Blood Pressure</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input
-														id="bp-sys"
-														name="bp-sys"
-														size="3"
-														maxlength="3"
-														inputmode="numeric"
-														pattern="[0-9]{0,3}"
-													/>
-													<span class="mx-2">/</span>
-													<input id="bp-dia" name="bp-dia" size="3" maxlength="3" />
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="temperature">
-											<div class="vital-sign-label">Temperature (F)</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input id="temperature" name="temperature" maxlength="4" />
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="pulse">
-											<div class="vital-sign-label">Heart Rate</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input id="pulse" name="pulse" maxlength="3" />
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="o2">
-											<div class="vital-sign-label">Oxygen Saturation</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input id="o2" name="o2" maxlength="3" />
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="respirations">
-											<div class="vital-sign-label">Respirations</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input id="respirations" name="respirations" maxlength="3" />
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="pain">
-											<div class="vital-sign-label">Pain (0-10)</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input id="pain" name="pain" maxlength="2" />
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="height">
-											<div class="vital-sign-label">Height</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input
-														id="height-feet"
-														name="height-feet"
-														size="3"
-														maxlength="3"
-														placeholder="feet"
-													/>
-													<span class="mx-2">/</span>
-													<input
-														id="height-inches"
-														name="height-inches"
-														size="3"
-														maxlength="3"
-														placeholder="inches"
-													/>
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="weight">
-											<div class="vital-sign-label">Weight (lbs)</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input id="weight" name="weight" maxlength="3" />
-												</div>
-											</div>
-										</div>
-
-										<table class="vs-table">
-											<thead>
-												<tr>
-													<th></th>
-													<th>
-														<div class="vs-date-time vs-column">
-															<span class="vs-date">11/12/2024</span>
-															<span class="vital-sign-history-time">21:22</span>	
-														</div>
-													</th>
-													<th>
-														<div class="vs-date-time vs-column">
-															<span class="vs-date">11/12/2024</span>
-															<span class="vital-sign-history-time">21:22</span>	
-														</div>
-													</th>
-													<th>
-														<div class="vs-date-time vs-column">
-															<span class="vs-date">11/12/2024</span>
-															<span class="vital-sign-history-time">21:22</span>	
-														</div>
-													</th>
-													<th>
-														<div class="vital-sign-input" id="vital-sign-today">11/15/2024</div>
-													</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td class="vital-sign-label">Blood Pressure</td>
-													<td>120/89</td>
-													<td>120/80</td>
-													<td>120/80</td>
-													<td>
-														<div class="vital-sign-input">
-															<div class="vital-input-container">
-																<input id="bp-sys" name="bp-sys" size="3" maxlength="3" inputmode="numeric" pattern="[0-9]{0,3}">
-																<span class="mx-2">/</span>
-																<input id="bp-dia" name="bp-dia" size="3" maxlength="3">
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="vital-sign-label">Temperature (F)</td>
-													<td>98.6</td>
-													<td>98.6</td>
-													<td>98.6</td>
-													<td>
-														<div class="vital-sign-input">
-															<div class="vital-input-container">
-																<input id="temperature" name="temperature" maxlength="4">
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="vital-sign-label">Heart Rate</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td>
-														<div class="vital-sign-input">
-															<div class="vital-input-container">
-																<input id="pulse" name="pulse" maxlength="3">
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="vital-sign-label">Oxygen Saturation</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td>
-														<div class="vital-sign-input">
-															<div class="vital-input-container">
-																<input id="o2" name="o2" maxlength="3">
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="vital-sign-label">Respirations</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td>
-														<div class="vital-sign-input">
-															<div class="vital-input-container">
-																<input id="respirations" name="respirations" maxlength="3">
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="vital-sign-label">Pain (0-10)</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td>
-														<div class="vital-sign-input">
-															<div class="vital-input-container">
-																<input id="pain" name="pain" maxlength="2">
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="vital-sign-label">Height</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td>
-														<div class="vital-sign-input">
-															<div class="vital-input-container">
-																<input id="height-feet" name="height-feet" size="3" maxlength="3" placeholder="feet">
-																<span class="mx-2">/</span>
-																<input id="height-inches" name="height-inches" size="3" maxlength="3" placeholder="inches">
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="vital-sign-label">Weight (lbs)</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td>
-														<div class="vital-sign-input">
-															<div class="vital-input-container">
-																<input id="weight" name="weight" maxlength="3">
-															</div>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-
-										<button
-											type="submit"
-											class="btn btn-green"
-											id="vital-sign-save-btn"
-										>
-											Save
-										</button>
-									</form>
-								</span>
+							<div id="vs-tab" class="tab-pane active">
+								<form id="vital-sign-form" autocomplete="off">
+									<div id="vs-form-content"></div>
+									<button
+										type="submit"
+										class="btn btn-green"
+										id="vital-sign-save-btn"
+									>
+										Save
+									</button>
+								</form>
 							</div>
 							<div id="tab-2" class="tab-pane">
 								<span
@@ -360,6 +96,7 @@
 		</div>
 		<script>
 			window.addEventListener("DOMContentLoaded", function () {
+
 				function loginSubmit(event) {
 					event.preventDefault();
 					showView("patient-search");
@@ -401,6 +138,12 @@
 					vitalSignForm.querySelectorAll("input").forEach((input) => {
 						input.classList.remove("abnormal");
 					});
+
+					vitalSignsController.buildVitalSignsTable(patient);
+
+					if(true){
+						return;
+					}
 
 					document.getElementById("vital-sign-mrn").value = patient.mrn;
 					document.getElementById("vital-sign-today").innerHTML = new Date().toLocaleDateString();
@@ -612,5 +355,6 @@
 			};
 		</script>
 		<script src="./js/patientData.js"></script>
+		<script src="js/vitalSigns.js"></script>
 	</body>
 </html>
