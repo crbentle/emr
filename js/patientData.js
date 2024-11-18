@@ -146,7 +146,7 @@ const patientService = {
 function saveVitalSigns(formData) {
 	// Don't save if everything is empty
 	let fieldsWithValues = Array.from(formData.entries())
-		.filter(([key, value]) => key !== 'vital-sign-mrn' && !!value);
+		.filter(([key, value]) => key !== 'vital-sign-mrn' && key !== 'editDate' && !!value);
 	
 	if(!fieldsWithValues.length){
 		return false;
