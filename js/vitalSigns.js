@@ -1,20 +1,26 @@
 var vitalSignsController = (function () {
-	function buildVitalSignsTable(patient) {
+	let saveHandler;
+	function buildVitalSignsTable(patient, options = {}) {
+		const { editDate, savedDate } = options;
+
+		// TODO: Disable 4th column inputs when editing
+		// TODO: Save vital signs in order so we don't need to sort
 		// Get saved vital signs
 		let vitalSigns = [...patientService.vitalSigns.load(patient.mrn)]
 			// Sort by date, oldest first
-			.sort((a, b) => a.date - b.date);
-
-		// TODO: Use colgroup for save-flash
-		//         <colgroup>
-		//     <col span="3">
-		//     <col class="save-flash">
-		//   </colgroup>
+			.sort((a, b) => a.date - b.date)
+			// Remove all but the last 3 vital signs
+			?.slice(-3);
 
 		const table = createElement({
 			type: "table",
 			classList: ["vs-table"],
-			childNodes: [createColGroup(), createHead({ vitalSigns }), createBody(vitalSigns)],
+			childNodes: [
+				createColGroup(findVitalSignIndex(vitalSigns, savedDate)),
+				createHead({ vitalSigns }),
+				createBody(vitalSigns, { editingIndex: findVitalSignIndex(vitalSigns, editDate) }),
+				createFooter(findVitalSignIndex(vitalSigns, editDate)),
+			],
 		});
 
 		// Setup validation on vital-sign inputs
@@ -22,6 +28,24 @@ var vitalSignsController = (function () {
 			input.addEventListener("blur", validateVitalSign);
 			input.addEventListener("input", (event) => (event.target.value = event.target.value.replace(/\D/g, "")));
 		});
+
+		table.querySelectorAll(".vs-edit").forEach((input) => {
+			input.addEventListener("click", (event) => {
+				buildVitalSignsTable(patient, { editDate: Number(event.target.dataset?.date) });
+			});
+		});
+
+		// TODO: Move form creation here? (Would elimated the need to remove listener)
+		const form = document.getElementById("vital-sign-form");
+
+		if (saveHandler) {
+			form.removeEventListener("submit", saveHandler);
+		}
+		saveHandler = (event) => {
+			handleSave(event, editDate);
+		};
+
+		form.addEventListener("submit", saveHandler);
 
 		const mrnInput = document.createElement("input");
 		mrnInput.type = "hidden";
@@ -34,8 +58,8 @@ var vitalSignsController = (function () {
 		return table;
 	}
 
-	function createColGroup(saveIndex = 2) {
-		if (!(saveIndex || saveIndex === 0)) {
+	function createColGroup(saveIndex) {
+		if (saveIndex < 0) {
 			return null;
 		}
 		const group = createElement({ type: "colgroup" });
@@ -44,6 +68,11 @@ var vitalSignsController = (function () {
 			`<col span="${1 + saveIndex}">
             <col class="save-flash">`
 		);
+
+		// Remove the 'save-flash' class after the animation finishes
+		const saveCol = group.lastChild;
+		saveCol.addEventListener("animationend", () => saveCol.classList.remove("save-flash"), false);
+
 		return group;
 	}
 
@@ -86,17 +115,43 @@ var vitalSignsController = (function () {
 		return thead;
 	}
 
-	function createBody(vitalSigns) {
+	function createBody(vitalSigns, options = {}) {
+		const { editingIndex } = options;
 		const body = createElement({ type: "tbody" });
 
 		let vsTypes = ["bp", "temp", "pulse", "o2", "resp", "pain", "height", "weight"];
 
-		vsTypes.forEach((type) => body.appendChild(createBodyRow(type, vitalSigns)));
+		vsTypes.forEach((type) => body.appendChild(createBodyRow(type, vitalSigns, editingIndex)));
 
 		return body;
 	}
 
-	function createBodyRow(vitalSignType, vitalSigns) {
+	function createFooter(editingIndex) {
+		const footer = createElement({ type: "tfoot" });
+		const row = createElement({ type: "tr" });
+		footer.appendChild(row);
+		row.appendChild(createElement({ type: "td" })); // Empty cell below labels
+		let saveButtonAdded = false;
+		for (let i = 0; i < 4; i++) {
+			const cell = createElement({ type: "td" });
+			if (i === editingIndex || (i === 3 && !saveButtonAdded)) {
+				saveButtonAdded = true;
+				cell.insertAdjacentHTML(
+					"beforeend",
+					`<button type="submit" class="btn btn-green" id="vital-sign-save-btn">Save</button>`
+				);
+			}
+			row.appendChild(cell);
+		}
+		return footer;
+	}
+
+	function createBodyRow(vitalSignType, vitalSigns, editingIndex) {
+		/* TODO:
+		 * - use for loop for all 4 columns (default to editing last column)
+		 * - Always build input cell for last column
+		 * - if last column != editingIndex, disable inputs and don't add name or id
+		 */
 		// TODO: Determine which column is the input
 		const row = createElement({ type: "tr" });
 		row.appendChild(
@@ -108,10 +163,9 @@ var vitalSignsController = (function () {
 		);
 
 		// TODO: Change input classes and add left+right padding
-		let testEditingIndex = 3;
 		for (let i = 0; i < 3; i++) {
-			if (i === testEditingIndex) {
-				row.appendChild(createInputCell(vitalSignType));
+			if (i === editingIndex) {
+				row.appendChild(createInputCell(vitalSignType, vitalSigns[i]));
 			} else {
 				row.insertAdjacentHTML(
 					"beforeend",
@@ -125,7 +179,7 @@ var vitalSignsController = (function () {
 		return row;
 	}
 
-	function createInputCell(vitalSignType) {
+	function createInputCell(vitalSignType, vitalSigns) {
 		const cell = createElement({ type: "td" });
 		const div = createElement({ type: "div", classList: ["vital-sign-input"] });
 		const container = createElement({ type: "div", classList: ["vital-input-container"] });
@@ -138,42 +192,65 @@ var vitalSignsController = (function () {
 			case "bp":
 				container.insertAdjacentHTML(
 					"beforeend",
-					`<input id="bp-sys" name="bp-sys" size="3" maxlength="3" inputmode="numeric" pattern="[0-9]{0,3}">
+					`<input id="bp-sys" name="bp-sys" size="3" maxlength="3" inputmode="numeric" pattern="[0-9]{0,3}" value="${
+						vitalSigns?.bp?.sys || ""
+					}">
                     <span class="mx-2">/</span>
-                    <input id="bp-dia" name="bp-dia" size="3" maxlength="3" value="${""}">
+                    <input id="bp-dia" name="bp-dia" size="3" maxlength="3" value="${vitalSigns?.bp?.dia || ""}">
                     `
 				);
 				break;
 			case "temp":
-				container.insertAdjacentHTML("beforeend", `<input id="temperature" name="temperature" maxlength="4">`);
+				container.insertAdjacentHTML(
+					"beforeend",
+					`<input id="temperature" name="temperature" maxlength="4" value="${vitalSigns?.temp || ""}">`
+				);
 				break;
 			case "pulse":
-				container.insertAdjacentHTML("beforeend", `<input id="pulse" name="pulse" maxlength="3">`);
+				container.insertAdjacentHTML(
+					"beforeend",
+					`<input id="pulse" name="pulse" maxlength="3" value="${vitalSigns?.pulse || ""}">`
+				);
 				break;
 			case "o2":
-				container.insertAdjacentHTML("beforeend", `<input id="o2" name="o2" maxlength="3">`);
+				container.insertAdjacentHTML(
+					"beforeend",
+					`<input id="o2" name="o2" maxlength="3" value="${vitalSigns?.o2 || ""}">`
+				);
 				break;
 			case "resp":
 				container.insertAdjacentHTML(
 					"beforeend",
-					`<input id="respirations" name="respirations" maxlength="3">`
+					`<input id="respirations" name="respirations" maxlength="3" value="${vitalSigns?.resp || ""}">`
 				);
 				break;
 			case "pain":
-				container.insertAdjacentHTML("beforeend", `<input id="pain" name="pain" maxlength="2">`);
+				container.insertAdjacentHTML(
+					"beforeend",
+					`<input id="pain" name="pain" maxlength="2" value="${vitalSigns?.pain || ""}">`
+				);
 				break;
 			case "height":
+				let valueFeet = "";
+				let valueInches = "";
+				if (vitalSigns?.height) {
+					valueFeet = Math.floor(vitalSigns.height / 12);
+					valueInches = vitalSigns.height % 12;
+				}
 				container.insertAdjacentHTML(
 					"beforeend",
 					`
-													<input id="height-feet" name="height-feet" size="3" maxlength="3" placeholder="feet">
+													<input id="height-feet" name="height-feet" size="3" maxlength="3" placeholder="feet" value="${valueFeet}">
 													<span class="mx-2">/</span>
-													<input id="height-inches" name="height-inches" size="3" maxlength="3" placeholder="inches">
+													<input id="height-inches" name="height-inches" size="3" maxlength="3" placeholder="inches" value="${valueInches}">
 												`
 				);
 				break;
 			case "weight":
-				container.insertAdjacentHTML("beforeend", `<input id="weight" name="weight" maxlength="3">`);
+				container.insertAdjacentHTML(
+					"beforeend",
+					`<input id="weight" name="weight" maxlength="3" value="${vitalSigns?.weight || ""}">`
+				);
 				break;
 		}
 
@@ -230,6 +307,7 @@ var vitalSignsController = (function () {
 					const date = new Date(vitalSign.date);
 					value = `
 								<div>${date.toLocaleDateString()}
+								<span class="vs-edit" title="Edit" data-date=${vitalSign.date}></span>
 									<span class="vital-sign-history-time">${date.toTimeString().substring(0, 5)}</span>	
 								</div>`;
 				}
@@ -278,6 +356,83 @@ var vitalSignsController = (function () {
 	function setElementClass(element, ...classList) {
 		element.classList.add(...classList);
 	}
+
+	/**
+	 * Find the index of a vital sign with the matching date.
+	 * @param {VitalSign[]} vitalSignArray
+	 * @param {Number} editDate
+	 * @returns
+	 */
+	function findVitalSignIndex(vitalSignArray, editDate) {
+		return vitalSignArray?.findIndex((vitalSigns) => vitalSigns?.date === editDate);
+	}
+
+	function handleSave(event, editDate) {
+		event.preventDefault();
+
+		const formData = new FormData(document.getElementById("vital-sign-form"));
+		if (editDate) {
+			formData.append("editDate", editDate);
+		}
+		let savedDate = patientService.vitalSigns.save(formData);
+
+		if (!savedDate) {
+			return;
+		}
+
+		const mrn = formData.get("vital-sign-mrn");
+		buildVitalSignsTable(patientService.getPatient(mrn), { savedDate: savedDate });
+	}
+
+	
+
+			/**
+	Normal Values: (red flag outside normal)
+		- Temp: 97.6-99.6 
+		- Pulse: 60-100
+		- Resp: 12-20
+		- Oxygen Saturation: >=90
+		- BP: 90-150 / 50-90
+				 */
+		const validateVitalSign = (event) => {
+			let inputId = event.target.id;
+			let value = Number(event.target.value);
+			if (!value) {
+				event.target.classList.remove("abnormal");
+				return;
+			}
+
+			let inRange = true;
+
+			switch (inputId) {
+				case "bp-sys":
+					inRange = value >= 90 && value <= 150;
+					break;
+				case "bp-dia":
+					inRange = value >= 50 && value <= 90;
+					break;
+				case "temperature":
+					inRange = value >= 97.6 && value <= 99.6;
+					break;
+				case "pulse":
+					inRange = value >= 60 && value <= 100;
+					break;
+				case "o2":
+					inRange = value >= 90;
+					break;
+				case "respirations":
+					inRange = value >= 12 && value <= 20;
+					break;
+
+				default:
+					break;
+			}
+			if (inRange) {
+				event.target.classList.remove("abnormal");
+			} else {
+				event.target.classList.add("abnormal");
+			}
+		};
 
 	return {
 		buildVitalSignsTable,

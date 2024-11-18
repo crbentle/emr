@@ -354,6 +354,15 @@ option:not(:first-of-type) {
     text-align: left;
 }
 
+.vs-edit:after {
+    content: "\270E";
+    cursor: pointer;
+    color: green;
+    position: absolute;
+    margin-top: -3px;
+    margin-left: 3px;
+}
+
 form {
 	margin-top: 0.5em;
 }
