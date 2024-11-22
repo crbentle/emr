@@ -47,146 +47,15 @@
 				<div class="container--tabs">
 					<section class="row">
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="#tab-1">Vital Signs</a></li>
+							<li class="active"><a href="#vs-tab">Vital Signs</a></li>
 							<li class=""><a href="#tab-2">Intake & Outake</a></li>
 							<li class=""><a href="#tab-3">ADL</a></li>
 						</ul>
 						<div class="tab-content">
-							<div id="tab-1" class="tab-pane active">
-								<span
-									class="glyphicon glyphicon-leaf glyphicon--home--feature two columns text-center"
-								></span>
-								<span class="col-md-10">
-									<form id="vital-sign-form" autocomplete="off">
-										<input type="hidden" id="vital-sign-mrn" name="vital-sign-mrn" />
-										<div class="vital-sign-grid-row" data-vital-type="date">
-											<div></div>
-											<div class="vital-sign-history">10/2/2024</div>
-											<div class="vital-sign-history">10/3/2024</div>
-											<div class="vital-sign-history">10/4/2024</div>
-											<div class="vital-sign-input" id="vital-sign-today">10/5/2024</div>
-										</div>
-										<hr style="margin: 0" />
-										<div class="vital-sign-grid-row" data-vital-type="bp">
-											<div class="vital-sign-label">Blood Pressure</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input
-														id="bp-sys"
-														name="bp-sys"
-														size="3"
-														maxlength="3"
-														inputmode="numeric"
-														pattern="[0-9]{0,3}"
-													/>
-													<span class="mx-2">/</span>
-													<input id="bp-dia" name="bp-dia" size="3" maxlength="3" />
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="temperature">
-											<div class="vital-sign-label">Temperature (F)</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input id="temperature" name="temperature" maxlength="4" />
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="pulse">
-											<div class="vital-sign-label">Heart Rate</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input id="pulse" name="pulse" maxlength="3" />
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="o2">
-											<div class="vital-sign-label">Oxygen Saturation</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input id="o2" name="o2" maxlength="3" />
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="respirations">
-											<div class="vital-sign-label">Respirations</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input id="respirations" name="respirations" maxlength="3" />
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="pain">
-											<div class="vital-sign-label">Pain (0-10)</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input id="pain" name="pain" maxlength="2" />
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="height">
-											<div class="vital-sign-label">Height</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input
-														id="height-feet"
-														name="height-feet"
-														size="3"
-														maxlength="3"
-														placeholder="feet"
-													/>
-													<span class="mx-2">/</span>
-													<input
-														id="height-inches"
-														name="height-inches"
-														size="3"
-														maxlength="3"
-														placeholder="inches"
-													/>
-												</div>
-											</div>
-										</div>
-										<div class="vital-sign-grid-row" data-vital-type="weight">
-											<div class="vital-sign-label">Weight (lbs)</div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-history"></div>
-											<div class="vital-sign-input">
-												<div class="vital-input-container">
-													<input id="weight" name="weight" maxlength="3" />
-												</div>
-											</div>
-										</div>
-										<button
-											type="submit"
-											class="btn btn-green"
-											id="vital-sign-save-btn"
-										>
-											Save
-										</button>
-									</form>
-								</span>
+							<div id="vs-tab" class="tab-pane active">
+								<form id="vital-sign-form" autocomplete="off">
+									<div id="vs-form-content"></div>
+								</form>
 							</div>
 							<div id="tab-2" class="tab-pane">
 								<span
@@ -220,6 +89,7 @@
 		</div>
 		<script>
 			window.addEventListener("DOMContentLoaded", function () {
+
 				function loginSubmit(event) {
 					event.preventDefault();
 					showView("patient-search");
@@ -251,82 +121,7 @@
 					document.getElementById("dob").textContent = patient.dateOfBirth;
 					document.getElementById("age").textContent = patient.age;
 
-					loadVitalSigns(patient);
-				}
-
-				function loadVitalSigns(patient) {
-					// reset the form and clear abnormal flags
-					const vitalSignForm = document.getElementById("vital-sign-form");
-					vitalSignForm.reset();
-					vitalSignForm.querySelectorAll("input").forEach((input) => {
-						input.classList.remove("abnormal");
-					});
-
-					document.getElementById("vital-sign-mrn").value = patient.mrn;
-					document.getElementById("vital-sign-today").innerHTML = new Date().toLocaleDateString();
-
-					// Get saved vital signs
-					const lastMidnight = new Date().setHours(0, 0, 0, 0);
-					let vitalSigns = [...patientService.vitalSigns.load(patient.mrn)]
-						// Sort by date, oldest first
-						.sort((a, b) => b.date - a.date);
-
-					[...document.querySelectorAll("[data-vital-type]")]
-						.map((e) => e.dataset.vitalType)
-						.forEach((dataType) => displayVitalSignData(vitalSigns, dataType));
-				}
-
-				function displayVitalSignData(vitalSigns, dataType) {
-					// Fill from right to left in case we don't have 3 histories
-					let columns = [
-						...document.querySelectorAll(`[data-vital-type="${dataType}"] .vital-sign-history`),
-					].reverse();
-					for (let i = 0; i < columns.length; i++) {
-						if (vitalSigns?.length > i) {
-							columns[i].innerHTML = getVitalSignValueByDataType(vitalSigns[i], dataType);
-						} else {
-							columns[i].innerHTML = "";
-						}
-					}
-				}
-
-				/**
-				 * Get the vital sign value corresponding to the data type and
-				 * format the data for display, if needed.
-				 */
-				function getVitalSignValueByDataType(vitalSign, dataType) {
-					let value = '';
-					switch (dataType) {
-						case "date":
-							if(vitalSign.date){
-								const date = new Date(vitalSign.date);
-								value = `
-								<div>${date.toLocaleDateString()}
-									<span class="vital-sign-history-time">${date.toTimeString().substr(0,5)}</span>	
-								</div>`
-							}
-							break;
-						case "bp":
-							if (vitalSign.bp?.sys || vitalSign.bp?.dia) {
-								value = `${vitalSign.bp.sys || ""}/${vitalSign.bp.dia || ""}`;
-							}
-							break;
-						case "temperature":
-							value = vitalSign.temp;
-							break;
-						case "respirations":
-							value = vitalSign.resp;
-							break;
-						case "height":
-							if(vitalSign.height){
-								value = `${Math.floor(vitalSign.height / 12)}' ${vitalSign.height % 12}"`;
-							}
-							break;
-						default:
-							// dataType and JSON key are the same
-							value = vitalSign[dataType];
-					}
-					return value;
+					vitalSignsController.buildVitalSignsTable(patient);
 				}
 
 				function buildPatientSelect() {
@@ -369,38 +164,6 @@
 					patientInfoDiv.classList.add("hidden");
 				});
 
-				function showSaveFlash() {
-					let savedFields = document.querySelectorAll('.vital-sign-grid-row .vital-sign-history:nth-of-type(4)');
-						savedFields.forEach((el) => {
-							el.classList.add('save-flash');
-							el.addEventListener("animationend", ()=>el.classList.remove('save-flash'),false);
-						});
-				}
-
-				document.getElementById("vital-sign-form").addEventListener("submit", (evt) => {
-					evt.preventDefault();
-
-					const formData = new FormData(document.getElementById("vital-sign-form"));
-					let success = patientService.vitalSigns.save(formData);
-					if(!success){
-						return;
-					}
-
-					const mrn = formData.get("vital-sign-mrn");
-					loadVitalSigns(patientService.getPatient(mrn));
-
-					showSaveFlash();
-				});
-
-				// Setup validation on vital-sign inputs
-				document.querySelectorAll(".vital-sign-input input").forEach((input) => {
-					input.addEventListener("blur", validateVitalSign);
-					input.addEventListener(
-						"input",
-						(event) => (event.target.value = event.target.value.replace(/\D/g, ""))
-					);
-				});
-
 				// store tabs variable
 				const tabs = document.querySelectorAll("ul.nav-tabs > li");
 				function onTabClick(tabClickEvent) {
@@ -423,55 +186,8 @@
 					tabs[i].addEventListener("click", onTabClick);
 				}
 			});
-
-			/**
-	Normal Values: (red flag outside normal)
-		- Temp: 97.6-99.6 
-		- Pulse: 60-100
-		- Resp: 12-20
-		- Oxygen Saturation: >=90
-		- BP: 90-150 / 50-90
-				 */
-			const validateVitalSign = (event) => {
-				let inputId = event.target.id;
-				let value = Number(event.target.value);
-				if (!value) {
-					event.target.classList.remove("abnormal");
-					return;
-				}
-
-				let inRange = true;
-
-				switch (inputId) {
-					case "bp-sys":
-						inRange = value >= 90 && value <= 150;
-						break;
-					case "bp-dia":
-						inRange = value >= 50 && value <= 90;
-						break;
-					case "temperature":
-						inRange = value >= 97.6 && value <= 99.6;
-						break;
-					case "pulse":
-						inRange = value >= 60 && value <= 100;
-						break;
-					case "o2":
-						inRange = value >= 90;
-						break;
-					case "respirations":
-						inRange = value >= 12 && value <= 20;
-						break;
-
-					default:
-						break;
-				}
-				if (inRange) {
-					event.target.classList.remove("abnormal");
-				} else {
-					event.target.classList.add("abnormal");
-				}
-			};
 		</script>
 		<script src="./js/patientData.js"></script>
+		<script src="js/vitalSigns.js"></script>
 	</body>
 </html>

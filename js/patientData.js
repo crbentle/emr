@@ -146,16 +146,18 @@ const patientService = {
 function saveVitalSigns(formData) {
 	// Don't save if everything is empty
 	let fieldsWithValues = Array.from(formData.entries())
-		.filter(([key, value]) => key !== 'vital-sign-mrn' && !!value);
+		.filter(([key, value]) => key !== 'vital-sign-mrn' && key !== 'editDate' && !!value);
 	
 	if(!fieldsWithValues.length){
 		return false;
 	}
 	
     const mrn = formData.get("vital-sign-mrn");
+	const date = Number(formData.get("editDate")) || new Date().getTime();
+	
 
 	const vitalSigns = {
-		date: new Date().getTime(),
+		date: date,
 		bp: {
 			sys: formData.get("bp-sys"),
 			dia: formData.get("bp-dia"),
@@ -170,12 +172,19 @@ function saveVitalSigns(formData) {
 	};
 
 	let vitalSignHistory = getVitalSigns(mrn);
-	vitalSignHistory.push(vitalSigns);
+	const editingIndex = vitalSignHistory?.findIndex(vs => vs?.date === vitalSigns.date);
+	
+	if(editingIndex >= 0) {
+		vitalSignHistory[editingIndex] = vitalSigns;
+	} else {
+		vitalSignHistory.push(vitalSigns);
+	}
 	// Only keep the last 3 histories
 	vitalSignHistory = vitalSignHistory.slice(-3);
 	
 	storeData(mrn, vitalSignHistory);
-	return true;
+	
+	return date;
 }
 
 /**
