@@ -138,7 +138,7 @@ var vitalSignsController = (function () {
 		const { editingIndex } = options;
 		const body = createElement('tbody');
 
-		let vsTypes = ['bp', 'temp', 'pulse', 'o2', 'resp', 'pain', 'height', 'weight'];
+		let vsTypes = ['temp', 'pulse', 'resp', 'bp', 'o2', 'pain', 'height', 'weight'];
 
 		vsTypes.forEach((type) => body.appendChild(createBodyRow(type, vitalSigns, editingIndex)));
 
