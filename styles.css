@@ -314,6 +314,19 @@ option:not(:first-of-type) {
     transform: translate(1px, 1px);
 }
 
+.btn-vs-edit {
+    padding: 6px 4px;
+    background-color: #7492cb;
+    flex: 1 1 0px;
+}
+
+.edit-button-wrapper {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 10px;
+    padding: 13px 3px 6px 10px;
+}
+
 .vital-sign-history-time {
     font-size: small;
     display: block;
@@ -358,6 +371,15 @@ option:not(:first-of-type) {
     content: "\270E";
     cursor: pointer;
     color: green;
+    position: absolute;
+    margin-top: -3px;
+    margin-left: 3px;
+}
+
+.vs-delete:after {
+    content: "\1F5D1";
+    cursor: pointer;
+    color: red;
     position: absolute;
     margin-top: -3px;
     margin-left: 3px;

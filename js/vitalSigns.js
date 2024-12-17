@@ -4,7 +4,6 @@ var vitalSignsController = (function () {
 		const { editDate, savedDate } = options;
 
 		// TODO: Save vital signs in order so we don't need to sort
-		// TODO: Handle cancel edit
 
 		// Get saved vital signs
 		let vitalSigns = [...getVitalSigns(mrn)]
@@ -13,15 +12,16 @@ var vitalSignsController = (function () {
 			// Remove all but the last 3 vital signs
 			?.slice(-3);
 
+		const editingIndex = findDateColumnIndex(vitalSigns, editDate);
 		const table = createElement('table', {
 			attributes: {
 				class: 'vs-table',
 			},
 			childNodes: [
 				createColGroup(findDateColumnIndex(vitalSigns, savedDate)),
-				createHead({ vitalSigns }),
-				createBody(vitalSigns, { editingIndex: findDateColumnIndex(vitalSigns, editDate) }),
-				createFooter(findDateColumnIndex(vitalSigns, editDate), vitalSigns?.length),
+				createHead({ vitalSigns, editingIndex }),
+				createBody(vitalSigns, { editingIndex: editingIndex }),
+				createFooter(editingIndex, vitalSigns?.length),
 			],
 		});
 
@@ -38,6 +38,17 @@ var vitalSignsController = (function () {
 			input.addEventListener('click', (event) => {
 				buildVitalSignsTable(mrn, { editDate: Number(event.target.dataset?.date) });
 			});
+		});
+
+		table.querySelector('.vs-delete')?.addEventListener('click', (event) => {
+			if (window.confirm('Are you sure you want to delete?')) {
+				deleteVitalSign({ mrn, date: Number(event.target.dataset?.date) });
+				buildVitalSignsTable(mrn);
+			}
+		});
+
+		table.querySelector('#vs-edit-cancel')?.addEventListener('click', (event) => {
+			buildVitalSignsTable(mrn);
 		});
 
 		// TODO: Move form creation here? (Would elimated the need to remove listener)
@@ -94,7 +105,7 @@ var vitalSignsController = (function () {
 		return group;
 	}
 
-	function createHead({ vitalSigns }) {
+	function createHead({ vitalSigns, editingIndex }) {
 		const thead = createElement('thead');
 		const row = createElement('tr');
 		thead.appendChild(row);
@@ -111,7 +122,7 @@ var vitalSignsController = (function () {
 
 			div.insertAdjacentHTML(
 				'beforeend',
-				`<td>${getVitalSignForColumn({ vitalSigns, type: 'date', columnIndex: i })}</td>`
+				`<td>${getVitalSignForColumn({ vitalSigns, type: 'date', columnIndex: i, editingIndex })}</td>`
 			);
 
 			header.appendChild(div);
@@ -153,7 +164,16 @@ var vitalSignsController = (function () {
 		let saveButtonAdded = false;
 		for (let i = 0; i < 4; i++) {
 			const cell = createElement('td');
-			if (i === editingIndex || (i === 3 && !saveButtonAdded)) {
+			if (i === editingIndex) {
+				saveButtonAdded = true;
+				cell.insertAdjacentHTML(
+					'beforeend',
+					`<div class="edit-button-wrapper">
+    					<button type="button" class="btn btn-blue btn-vs-edit" id="vs-edit-cancel">Cancel</button>
+						<button type="submit" class="btn btn-green btn-vs-edit">Save</button>
+					</div>`
+				);
+			} else if (i === 3 && !saveButtonAdded) {
 				saveButtonAdded = true;
 				cell.insertAdjacentHTML(
 					'beforeend',
@@ -338,8 +358,7 @@ var vitalSignsController = (function () {
 	 * Get the vital sign value corresponding to the data type and
 	 * format the data for display, if needed.
 	 */
-	function getVitalSignForColumn({ vitalSigns, type, columnIndex }) {
-		//let vitalSignIndex = vitalSigns?.length - 3 + i;
+	function getVitalSignForColumn({ vitalSigns, type, columnIndex, editingIndex }) {
 		if (!(vitalSigns?.length >= 3 - columnIndex)) {
 			return '';
 		}
@@ -353,10 +372,16 @@ var vitalSignsController = (function () {
 		switch (type) {
 			case 'date':
 				if (vitalSign.date) {
+					// Change Edit to Delete if editing
+					let editAction = 'Edit';
+					if (columnIndex === editingIndex) {
+						editAction = 'Delete';
+					}
+
 					const date = new Date(vitalSign.date);
 					value = `
 								<div>${date.toLocaleDateString()}
-								<span class="vs-edit" title="Edit" data-date=${vitalSign.date}></span>
+								<span class="vs-${editAction.toLowerCase()}" title="${editAction}" data-date=${vitalSign.date}></span>
 									<span class="vital-sign-history-time">${date.toTimeString().substring(0, 5)}</span>	
 								</div>`;
 				}
@@ -533,6 +558,14 @@ var vitalSignsController = (function () {
 		patientService.saveData(mrn, patient);
 
 		return date;
+	}
+
+	function deleteVitalSign({ mrn, date }) {
+		const vitalSigns = getVitalSigns(mrn).filter((vitalSign) => vitalSign.date !== date);
+		const patient = patientService.getPatient(mrn) || {};
+		patient.vitalSigns = vitalSigns;
+
+		patientService.saveData(mrn, patient);
 	}
 
 	/**
