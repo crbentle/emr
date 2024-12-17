@@ -1,13 +1,13 @@
 var vitalSignsController = (function () {
 	let saveHandler;
-	function buildVitalSignsTable(patient, options = {}) {
+	function buildVitalSignsTable(mrn, options = {}) {
 		const { editDate, savedDate } = options;
 
 		// TODO: Save vital signs in order so we don't need to sort
 		// TODO: Handle cancel edit
 
 		// Get saved vital signs
-		let vitalSigns = [...patientService.vitalSigns.load(patient.mrn)]
+		let vitalSigns = [...getVitalSigns(mrn)]
 			// Sort by date, oldest first
 			.sort((a, b) => a.date - b.date)
 			// Remove all but the last 3 vital signs
@@ -36,7 +36,7 @@ var vitalSignsController = (function () {
 
 		table.querySelectorAll('.vs-edit').forEach((input) => {
 			input.addEventListener('click', (event) => {
-				buildVitalSignsTable(patient, { editDate: Number(event.target.dataset?.date) });
+				buildVitalSignsTable(mrn, { editDate: Number(event.target.dataset?.date) });
 			});
 		});
 
@@ -51,7 +51,7 @@ var vitalSignsController = (function () {
 				type: 'hidden',
 				id: 'vital-sign-mrn',
 				name: 'vital-sign-mrn',
-				value: patient.mrn,
+				value: mrn,
 			},
 		});
 
@@ -366,12 +366,6 @@ var vitalSignsController = (function () {
 					value = `${vitalSign.bp.sys || ''}/${vitalSign.bp.dia || ''}`;
 				}
 				break;
-			case 'temp':
-				value = vitalSign.temp;
-				break;
-			case 'pulse':
-				value = vitalSign.resp;
-				break;
 			case 'height':
 				if (vitalSign.height) {
 					value = `${Math.floor(vitalSign.height / 12)}' ${vitalSign.height % 12}"`;
@@ -436,14 +430,14 @@ var vitalSignsController = (function () {
 		event.preventDefault();
 
 		const formData = new FormData(document.getElementById('vital-sign-form'));
-		let savedDate = patientService.vitalSigns.save(formData);
+		let savedDate = saveVitalSigns(formData);
 
 		if (!savedDate) {
 			return;
 		}
 
 		const mrn = formData.get('vital-sign-mrn');
-		buildVitalSignsTable(patientService.getPatient(mrn), { savedDate: savedDate });
+		buildVitalSignsTable(mrn, { savedDate: savedDate });
 	}
 
 	/**
@@ -493,6 +487,77 @@ var vitalSignsController = (function () {
 			event.target.classList.add('abnormal');
 		}
 	};
+
+	function saveVitalSigns(formData) {
+		// Don't save if everything is empty
+		let fieldsWithValues = Array.from(formData.entries()).filter(
+			([key, value]) => key !== 'vital-sign-mrn' && key !== 'editDate' && !!value
+		);
+
+		if (!fieldsWithValues.length) {
+			return false;
+		}
+
+		const mrn = formData.get('vital-sign-mrn');
+		const date = Number(formData.get('editDate')) || new Date().getTime();
+
+		const vitalSigns = {
+			date: date,
+			bp: {
+				sys: formData.get('bp-sys'),
+				dia: formData.get('bp-dia'),
+			},
+			temp: formData.get('temperature'),
+			pulse: formData.get('pulse'),
+			o2: formData.get('o2'),
+			resp: formData.get('respirations'),
+			pain: formData.get('pain'),
+			height: convertHeightToInches(formData.get('height-feet'), formData.get('height-inches')),
+			weight: formData.get('weight'),
+		};
+
+		let vitalSignHistory = getVitalSigns(mrn);
+		const editingIndex = vitalSignHistory?.findIndex((vs) => vs?.date === vitalSigns.date);
+
+		if (editingIndex >= 0) {
+			vitalSignHistory[editingIndex] = vitalSigns;
+		} else {
+			vitalSignHistory.push(vitalSigns);
+		}
+		// Only keep the last 3 histories
+		vitalSignHistory = vitalSignHistory.slice(-3);
+
+		const patient = patientService.getPatient(mrn) || {};
+		patient.vitalSigns = vitalSignHistory;
+
+		patientService.saveData(mrn, patient);
+
+		return date;
+	}
+
+	/**
+	 * Get the patient's vital signs history.
+	 * First, try to get history from local storage. If that is not available, get
+	 * history from the patientData object.
+	 *
+	 * @param {String} mrn
+	 * @returns The patient's vital signs history array, or an empty array if no history is found.
+	 */
+	function getVitalSigns(mrn) {
+		let vitalSigns = patientService.getData(mrn)?.vitalSigns;
+		if (!vitalSigns?.length) {
+			vitalSigns = patientService.getPatient(mrn)?.vitalSigns || [];
+		}
+
+		// Sort by date, oldest first
+		vitalSigns.sort((a, b) => a.date - b.date);
+
+		return vitalSigns;
+	}
+
+	function convertHeightToInches(feet, inches) {
+		return Number(feet) * 12 + Number(inches) || null;
+	}
 
 	return {
 		buildVitalSignsTable,

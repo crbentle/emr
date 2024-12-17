@@ -1,8 +1,3 @@
-/**
- * TODO:
- * - Add column edit icon (displays inline form and disables normal edit column)
- */
-
 const baseDate = new Date();
 const dateMinusOne = new Date(baseDate).setDate(baseDate.getDate() - 1);
 const dateMinusTwo = new Date(baseDate).setDate(baseDate.getDate() - 2);
@@ -10,11 +5,11 @@ const dateMinusThree = new Date(baseDate).setDate(baseDate.getDate() - 3);
 
 const patientData = [
 	{
-		firstName: "Maureene",
-		lastName: "Dulinty",
-		mrn: "6947012287",
-		gender: "Female",
-		dateOfBirth: "5/1/1946",
+		firstName: 'Maureene',
+		lastName: 'Dulinty',
+		mrn: '6947012287',
+		gender: 'Female',
+		dateOfBirth: '5/1/1946',
 		age: 78,
 		vitalSigns: [
 			{
@@ -62,167 +57,116 @@ const patientData = [
 		],
 	},
 	{
-		firstName: "Lindie",
-		lastName: "Keepe",
-		mrn: "0189267798",
-		gender: "Female",
-		dateOfBirth: "10/28/1933",
+		firstName: 'Lindie',
+		lastName: 'Keepe',
+		mrn: '0189267798',
+		gender: 'Female',
+		dateOfBirth: '10/28/1933',
 		age: 91,
 	},
 	{
-		firstName: "Antonella",
-		lastName: "McCurry",
-		mrn: "8748056995",
-		gender: "Male",
-		dateOfBirth: "6/7/1949",
+		firstName: 'Antonella',
+		lastName: 'McCurry',
+		mrn: '8748056995',
+		gender: 'Male',
+		dateOfBirth: '6/7/1949',
 		age: 75,
 	},
 	{
-		firstName: "Sayre",
-		lastName: "Feaster",
-		mrn: "9347946753",
-		gender: "Male",
-		dateOfBirth: "11/23/1936",
+		firstName: 'Sayre',
+		lastName: 'Feaster',
+		mrn: '9347946753',
+		gender: 'Male',
+		dateOfBirth: '11/23/1936',
 		age: 88,
 	},
 	{
-		firstName: "Dina",
-		lastName: "Lucas",
-		mrn: "7208551979",
-		gender: "Female",
-		dateOfBirth: "11/6/1938",
+		firstName: 'Dina',
+		lastName: 'Lucas',
+		mrn: '7208551979',
+		gender: 'Female',
+		dateOfBirth: '11/6/1938',
 		age: 86,
 	},
 	{
-		firstName: "Conn",
-		lastName: "Sheal",
-		mrn: "4611028917",
-		gender: "Male",
-		dateOfBirth: "9/19/1934",
+		firstName: 'Conn',
+		lastName: 'Sheal',
+		mrn: '4611028917',
+		gender: 'Male',
+		dateOfBirth: '9/19/1934',
 		age: 90,
 	},
 	{
-		firstName: "Blakeley",
-		lastName: "Gurney",
-		mrn: "2385707373",
-		gender: "Female",
-		dateOfBirth: "9/22/1931",
+		firstName: 'Blakeley',
+		lastName: 'Gurney',
+		mrn: '2385707373',
+		gender: 'Female',
+		dateOfBirth: '9/22/1931',
 		age: 93,
 	},
 	{
-		firstName: "Sharla",
-		lastName: "Dashwood",
-		mrn: "1567391443",
-		gender: "Female",
-		dateOfBirth: "1/22/1958",
+		firstName: 'Sharla',
+		lastName: 'Dashwood',
+		mrn: '1567391443',
+		gender: 'Female',
+		dateOfBirth: '1/22/1958',
 		age: 66,
 	},
 	{
-		firstName: "Derk",
-		lastName: "Galley",
-		mrn: "5705674619",
-		gender: "Male",
-		dateOfBirth: "3/1/1950",
+		firstName: 'Derk',
+		lastName: 'Galley',
+		mrn: '5705674619',
+		gender: 'Male',
+		dateOfBirth: '3/1/1950',
 		age: 74,
 	},
 	{
-		firstName: "Gayle",
-		lastName: "Worcs",
-		mrn: "2496219881",
-		gender: "Female",
-		dateOfBirth: "6/7/1955",
+		firstName: 'Gayle',
+		lastName: 'Worcs',
+		mrn: '2496219881',
+		gender: 'Female',
+		dateOfBirth: '6/7/1955',
 		age: 69,
 	},
 ];
 
 const patientService = {
-	vitalSigns: {
-		save: saveVitalSigns,
-		load: getVitalSigns,
-	},
 	getPatient: fetchPatient,
+	saveData: storeData,
+	getData: fetchData,
 };
 
-function saveVitalSigns(formData) {
-	// Don't save if everything is empty
-	let fieldsWithValues = Array.from(formData.entries())
-		.filter(([key, value]) => key !== 'vital-sign-mrn' && key !== 'editDate' && !!value);
-	
-	if(!fieldsWithValues.length){
-		return false;
-	}
-	
-    const mrn = formData.get("vital-sign-mrn");
-	const date = Number(formData.get("editDate")) || new Date().getTime();
-	
-
-	const vitalSigns = {
-		date: date,
-		bp: {
-			sys: formData.get("bp-sys"),
-			dia: formData.get("bp-dia"),
-		},
-		temp: formData.get("temperature"),
-		pulse: formData.get("pulse"),
-		o2: formData.get("o2"),
-		resp: formData.get("respirations"),
-		pain: formData.get("pain"),
-		height: convertHeightToInches(formData.get("height-feet"), formData.get("height-inches")),
-		weight: formData.get("weight"),
-	};
-
-	let vitalSignHistory = getVitalSigns(mrn);
-	const editingIndex = vitalSignHistory?.findIndex(vs => vs?.date === vitalSigns.date);
-	
-	if(editingIndex >= 0) {
-		vitalSignHistory[editingIndex] = vitalSigns;
-	} else {
-		vitalSignHistory.push(vitalSigns);
-	}
-	// Only keep the last 3 histories
-	vitalSignHistory = vitalSignHistory.slice(-3);
-	
-	storeData(mrn, vitalSignHistory);
-	
-	return date;
-}
-
 /**
- * Get the patient's vital signs history.
- * First, try to get history from local storage. If that is not available, get 
- * history from the patientData object.
- * @param {String} mrn
- * @returns The patient's vital signs history array, or an empty array if no history is found.
+ * Find, and return, the patient from the mock patients list with a matching MRN.
+ *
+ * @param {String} mrn The patient's Medical Record Number (MRN)
+ * @returns The patient, or undefined if a matching patient is not found
  */
-function getVitalSigns(mrn) {
-	let vitalSigns = fetchData(mrn);
-	if (!vitalSigns?.length) {
-        
-		vitalSigns = patientService.getPatient(mrn)?.vitalSigns || [];
-	}
-
-	// Sort by date, oldest first
-	vitalSigns.sort((a, b) => a.date - b.date);
-
-	return vitalSigns;
-}
-
-function convertHeightToInches(feet, inches) {
-	return (Number(feet) * 12 + Number(inches)) || null;
-}
-
 function fetchPatient(mrn) {
 	return patientData.find((p) => p.mrn === mrn);
 }
 
-function fetchData(key) {
-    const data = localStorage.getItem(key);
-    if(data){
-        return JSON.parse(data);
-    }
-	return null;
+/**
+ * Store a key/value pair in local storage.
+ * The value is expected to be a valid JSON object.
+ *
+ * @param {String} key The storage key
+ * @param {JSON} value The JSON object to store
+ */
+function storeData(key, json) {
+	localStorage.setItem(key, JSON.stringify(json));
 }
 
-function storeData(key, value) {
-	localStorage.setItem(key, JSON.stringify(value));
+/**
+ * Retrieve a stored object from local storage.
+ *
+ * @param {String} key
+ * @returns The stored data, parsed as JSON, or null if no data is found
+ */
+function fetchData(key) {
+	const data = localStorage.getItem(key);
+	if (data) {
+		return JSON.parse(data);
+	}
+	return null;
 }
