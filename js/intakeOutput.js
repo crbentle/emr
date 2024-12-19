@@ -10,6 +10,7 @@ var intakeAndOutputController = (function () {
 		'output.stool',
 		'output.other',
 	];
+	const SHIFTS = ['morning', 'afternoon', 'night'];
 	let patient, ioData, day;
 
 	function buildIntakeAndOutputDisplay(mrn) {
@@ -20,16 +21,32 @@ var intakeAndOutputController = (function () {
 		const container = document.getElementById('intake_output_content');
 		container.replaceChildren(...buildIOTables(ioData));
 
+		container.querySelectorAll('input').forEach((input) => {
+			input.addEventListener('blur', saveInput);
+		});
+
 		setSummaryTotal();
 	}
 
+	/**
+	 * Build an Intake & Output table for each shift
+	 *
+	 * @param {*} ioData
+	 * @returns A NodeList of tables
+	 */
 	function buildIOTables(ioData) {
-		return ['morning', 'afternoon', 'night'].map((shift) => buildIOTable(shift, ioData));
+		return SHIFTS.map((shift) => buildIOTable(shift, ioData));
 	}
 
+	/**
+	 * Clone the '#io-table-template' template and populate it with Intake & Output details for a particular shift.
+	 *
+	 * @param {('morning'|'afternoon'|'night')} shift The shift name
+	 * @param {*} data The patient's intake/output data for today
+	 * @returns The intake/output table Node
+	 */
 	function buildIOTable(shift, data) {
 		const table = document.querySelector('#io-table-template').content.cloneNode(true).querySelector('table');
-
 		table.id = `io-${shift}`;
 		const caption = table.querySelector('caption');
 		caption.classList.add(`io-${shift}-bg`);
@@ -37,21 +54,23 @@ var intakeAndOutputController = (function () {
 
 		const tbody = table.querySelector('tbody');
 
-		const date = new Date();
 		getShiftHours(shift).forEach((hour) => {
 			tbody.appendChild(buildHourRow(hour, data));
 		});
 
-		setTotal(table, 'intake');
-		setTotal(table, 'output');
-
-		table.querySelectorAll('input').forEach((input) => {
-			input.addEventListener('blur', saveInput);
-		});
+		setTableTotal(table, 'intake');
+		setTableTotal(table, 'output');
 
 		return table;
 	}
 
+	/**
+	 * Build the Intake/Output row for a particular hour.
+	 *
+	 * @param {int} hour
+	 * @param {*} ioData
+	 * @returns The tr Node
+	 */
 	function buildHourRow(hour, ioData) {
 		const timeData = ioData?.[hour];
 
@@ -65,6 +84,7 @@ var intakeAndOutputController = (function () {
 			createElement('td', { attributes: { class: 'io-time' }, childNodes: [document.createTextNode(time)] })
 		);
 
+		// Create a column and <input> for each i/o type
 		IO_DATA_KEYS.forEach((complexKey) => {
 			const [type, key] = complexKey.split('.');
 			tr.appendChild(
@@ -85,26 +105,27 @@ var intakeAndOutputController = (function () {
 		return tr;
 	}
 
-	function setTotal(table, type) {
+	/**
+	 * Sum of all 'intake' or 'output' inputs for the table and update the appropriate summary value.
+	 * This method will also call setSummaryTotal() to update the summary section.
+	 *
+	 * @param {Node} table The table to total
+	 * @param {('intake'|'output')} type The total type (intake or output)
+	 */
+	function setTableTotal(table, type) {
 		const element = table.querySelector(`.io-${type}-total`);
-		// let sum = [...table.querySelectorAll('input')]
-		// 	.filter((input) => input.dataset?.['key']?.includes(type))
-		// 	.map((input) => input.value || 0)
-		// 	.reduce((sum, value) => sum + Number(value), 0);
 		const sum = getSum(table, type);
 		element.innerHTML = `${sum.toLocaleString()} ml`;
 
 		document.getElementById(`${table.id}-${type}-summary`).innerHTML = sum;
-		//io-night-output-summary
 
 		setSummaryTotal();
-		
-
 	}
 
+	/**
+	 * Sum all intake and output values across all shifts and update the summary details.
+	 */
 	function setSummaryTotal() {
-		// Set summary totals
-		//summary-morning-intake
 		let intakeSummaryNode = document.getElementById(`summary-daily-intake`);
 		let intakeSum = getSum(document, 'intake');
 		intakeSummaryNode.innerHTML = `${intakeSum.toLocaleString()} ml`;
@@ -113,11 +134,17 @@ var intakeAndOutputController = (function () {
 		let outputSum = getSum(document, 'output');
 		outputSummaryNode.innerHTML = `${outputSum.toLocaleString()} ml`;
 
-		//
 		const summaryDifferenceNoe = document.getElementById(`summary-daily-difference`);
 		summaryDifferenceNoe.innerHTML = `${(intakeSum - outputSum).toLocaleString()} ml`;
 	}
 
+	/**
+	 * Sum all inputs under the parent node that have a data-key value matching the requested type.
+	 *
+	 * @param {Node} parentNode The parent element for which to sum all child inputs
+	 * @param {('intake'|'output')} type The type of sum to get (intake or output)
+	 * @returns The sum
+	 */
 	function getSum(parentNode, type) {
 		return [...parentNode.querySelectorAll('input')]
 			.filter((input) => input.dataset?.['key']?.includes(type))
@@ -125,6 +152,12 @@ var intakeAndOutputController = (function () {
 			.reduce((sum, value) => sum + Number(value), 0);
 	}
 
+	/**
+	 * Get the list of hours that belong to a shift.
+	 *
+	 * @param {('morning'|'afternoon'|'night')} shift The shift name
+	 * @returns A sorted array of hours for the shift
+	 */
 	function getShiftHours(shift) {
 		switch (shift) {
 			case 'morning':
@@ -138,6 +171,12 @@ var intakeAndOutputController = (function () {
 		}
 	}
 
+	/**
+	 * Returns the shift name that applies to the given hour.
+	 *
+	 * @param {int} hour The hour of the day, in 24-hour format
+	 * @returns {('morning'|'afternoon'|'night')} The shift that contains the hour
+	 */
 	function getShiftFromHour(hour) {
 		if (hour >= 7 && hour <= 14) {
 			return 'morning';
@@ -148,22 +187,40 @@ var intakeAndOutputController = (function () {
 		return 'night';
 	}
 
+	/**
+	 * Build a shift table title by upper-casing the first letter of a shift name and appending ' Shift'
+	 *
+	 * @param {String} shift
+	 * @returns
+	 */
 	function getShiftTitle(shift) {
 		return shift.charAt(0).toUpperCase() + shift.substring(1) + ' Shift';
 	}
 
+	/**
+	 * Return the Date, formatted to an ISO-8601 date (yyyy-mm-dd).
+	 *
+	 * @param {Date} date The date to format
+	 * @returns The date in ISO-8601 format (yyyy-mm-dd)
+	 */
 	function getDateString(date) {
-		/**
-		 * toISOString always returns UTC time. Subtract the timezone offset (converted to miliseconds) to get the local date.
-		 */
+		// toISOString always returns UTC time. Subtract the timezone offset (converted to miliseconds) to get the local date.
 		return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().substring(0, 10);
 	}
 
+	/**
+	 * Save the event target's value to local storage.
+	 *
+	 * This method will build out the necessary patient.io structure if this is the first time 
+	 * saving a value for this patient, day, field, etc.
+	 *
+	 * @param {Event} event The event that triggered the save
+	 */
 	function saveInput(event) {
 		// Remove any non-numeric characters
-		event.target.value = event.target.value.replace(/\D/g,'');
+		event.target.value = event.target.value.replace(/\D/g, '');
 		const value = Number(event.target.value) || undefined;
-		const key = event.target.dataset?.key;
+		const key = event.target.dataset.key;
 		const [hour, type, field] = key.split('.');
 		const previousValue = ioData[hour]?.[type]?.[field];
 
@@ -181,13 +238,11 @@ var intakeAndOutputController = (function () {
 
 			patientService.saveData(patient.mrn, patient);
 
-			setTotal(document.getElementById(`io-${getShiftFromHour(hour)}`), type);
+			setTableTotal(document.getElementById(`io-${getShiftFromHour(hour)}`), type);
 		}
 	}
 
 	return {
 		buildIntakeAndOutputDisplay,
 	};
-
-	// buildIntakeAndOutputDisplay('2496219881');
 })();
