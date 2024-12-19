@@ -137,13 +137,13 @@ const patientService = {
 };
 
 /**
- * Find, and return, the patient from the mock patients list with a matching MRN.
+ * Find, and return, the patient from local storage or the mock patients list with a matching MRN.
  *
  * @param {String} mrn The patient's Medical Record Number (MRN)
  * @returns The patient, or undefined if a matching patient is not found
  */
 function fetchPatient(mrn) {
-	return patientData.find((p) => p.mrn === mrn);
+	return fetchData(mrn) || patientData.find((p) => p.mrn === mrn);
 }
 
 /**
