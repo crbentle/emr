@@ -403,23 +403,6 @@ var vitalSignsController = (function () {
 		return value;
 	}
 
-	function createElement(type, { attributes, classList, id, childNodes } = {}) {
-		const element = document.createElement(type);
-		if (attributes) {
-			for (let [key, value] of Object.entries(attributes)) {
-				element.setAttribute(key, value);
-			}
-		}
-
-		childNodes?.forEach((node) => {
-			if (node) {
-				element.appendChild(node);
-			}
-		});
-
-		return element;
-	}
-
 	function setElementClass(element, ...classList) {
 		element.classList.add(...classList);
 	}

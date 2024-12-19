@@ -112,14 +112,14 @@ option:not(:first-of-type) {
 	background-color: #5e92d0;
 	color: white;
 }
-.btn.btn-blue:hover {
+.btn.btn-blue:hover, .btn.btn-blue:active, .btn.btn-blue:focus {
 	background-color: #3c7fd0;
 }
 .btn.btn-green {
 	background-color: #3fb855;
 	color: white;
 }
-.btn.btn-green:hover {
+.btn.btn-green:hover, .btn.btn-green:active, .btn.btn-green:focus {
 	background-color: #309d44;
 }
 .btn {
@@ -168,6 +168,7 @@ option:not(:first-of-type) {
 
 .btn:focus {
 	outline: 1px transparent;
+	border: 1px solid black;
 }
 
 /* https://codepen.io/inupurnomo/pen/MWWRmQr */
@@ -465,4 +466,88 @@ input::placeholder {
 	50% {
 		background-color: #efd957;
 	}
+}
+
+.io-table {
+    width: 100%;
+    border-collapse: collapse;
+
+	& ~ .io-table {
+		margin-top: 20px;
+	}
+
+	caption {
+		border: 3px solid black;
+		border-collapse: collapse;
+		border-bottom: none;
+		font-weight: bold;
+	}
+
+	.io-morning-bg {
+		background-color: #bddcbd;
+		font-weight: bold;
+	}
+
+	.io-afternoon-bg {
+		background-color: #d2dcbd;
+		font-weight: bold;
+	}
+
+	.io-night-bg {
+		background-color: #bdcadc;
+		font-weight: bold;
+	}
+
+	colgroup {
+		border: 3px solid black;
+	}
+
+	thead th {
+		border-bottom: 3px solid black;
+	}
+
+	tfoot {
+		border: 3px solid black;
+	}
+
+	td, th {
+		border: 1px solid black;
+		min-width: 50px;
+		text-align: center;
+	}
+
+	td {
+		padding: 0;
+	}
+
+	th {
+		padding: 3px;
+	}
+
+	.io-total {
+		margin-left: 10px;
+	}
+
+	td.io-time {
+		text-align: right;
+		padding-right: 5px;
+		padding-left: 0;
+	}
+
+	input:focus-visible {
+		outline: none;
+		outline-style: inset;
+		outline-offset: -1px;
+	}
+	input {
+		width: 100%;
+		box-sizing: border-box;
+		text-align: right;
+		border: none;
+		padding-right: 5px;
+	}
+}
+
+.mt-20 {
+	margin-top: 20px;
 }
