@@ -143,7 +143,7 @@ const patientService = {
  * @returns The patient, or undefined if a matching patient is not found
  */
 function fetchPatient(mrn) {
-	return fetchData(mrn) || patientData.find((p) => p.mrn === mrn);
+	return fetchData(mrn) || patientData.find((p) => p.mrn === mrn) || { mrn: mrn };
 }
 
 /**

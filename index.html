@@ -5,7 +5,7 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Flowsheets</title>
-	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<link rel="stylesheet" type="text/css" href="css/styles.css" />
 </head>
 
 <body>
@@ -25,7 +25,7 @@
 		</div>
 
 		<!-- Patient Search-->
-		<div class="view active" id="view-patient-search">
+		<div class="view" id="view-patient-search">
 			<h1>Patient Search</h1>
 			<div id="patient-cards-wrapper">
 				<div id="patient-cards"></div>
@@ -162,129 +162,14 @@
 			</div>
 		</div>
 
-		<div style="display: none">
-			&#128100; &#x1F464; &#x1f468; &#x1f469;
-
-			<img src="./img/bust-in-silhouette.svg" class="patient-img" />
-		</div>
-	</div>
 	</div>
 	<script>
 		window.addEventListener("DOMContentLoaded", function () {
-
-
-			function loginSubmit(event) {
-				event.preventDefault();
-				showView("patient-search");
-			}
-
-			function showView(viewName) {
-				const views = document.getElementsByClassName("view");
-				for (let view of views) {
-					if (view.id === `view-${viewName}`) {
-						view.classList.add("active");
-					} else {
-						view.classList.remove("active");
-					}
-				}
-			}
-
-			function displayPatientInfo(mrn) {
-				const patient = patientService.getPatient(mrn);
-				if (!patient) {
-					return;
-				}
-
-				// resetTabs();
-
-				showView("patient-chart");
-				document.getElementById("patient-info").classList.remove("hidden");
-
-				const displayName = `${patient.lastName}, ${patient.firstName} (${patient.mrn})`;
-				document.getElementById("patient-name").textContent = displayName;
-				document.getElementById("gender").textContent = patient.gender;
-				document.getElementById("dob").textContent = patient.dateOfBirth;
-				document.getElementById("age").textContent = patient.age;
-
-				vitalSignsController.buildVitalSignsTable(mrn);
-				intakeAndOutputController.buildIntakeAndOutputDisplay(mrn);
-				adlController.buildADLDisplay(mrn);
-			}
-
-			function resetTabs() {
-				document.querySelectorAll('.nav-tabs li, .tab-pane').forEach(node => {
-					node.classList.remove('active');
-				});
-
-				document.querySelectorAll('#vs-tab, #vs-tab-content').forEach(node => {
-					node.classList.add('active');
-				});
-			}
-
-			function buildPatientSelect() {
-				// patient cards
-				let patientCards = patientData.map((patient) => {
-					const card = document.createElement("div");
-					card.className = "patient-card";
-
-					const img = document.createElement("img");
-					img.className = "patient-img";
-					img.src = "./img/bust-in-silhouette.svg";
-					card.appendChild(img);
-
-					const name = document.createElement("div");
-					name.className = "bold";
-					name.appendChild(
-						document.createTextNode(`${patient.lastName}, ${patient.firstName} (${patient.mrn})`)
-					);
-					card.appendChild(name);
-
-					const dob = document.createElement("div");
-					dob.appendChild(document.createTextNode(patient.dateOfBirth));
-					card.appendChild(dob);
-
-					card.addEventListener("click", (event) => {
-						displayPatientInfo(patient.mrn);
-					});
-					return card;
-				});
-
-				document.getElementById("patient-cards").replaceChildren(...patientCards);
-			}
-
-			document.getElementById("login-form").addEventListener("submit", loginSubmit);
-			buildPatientSelect();
-
-			document.getElementById("new-patient-btn").addEventListener("click", () => {
-				showView("patient-search");
-				const patientInfoDiv = document.getElementById("patient-info");
-				patientInfoDiv.classList.add("hidden");
-			});
-
-			// store tabs variable
-			const tabs = document.querySelectorAll("ul.nav-tabs > li");
-			function onTabClick(tabClickEvent) {
-				tabClickEvent.preventDefault();
-				for (let i = 0; i < tabs.length; i++) {
-					tabs[i].classList.remove("active");
-				}
-				const clickedTab = tabClickEvent.currentTarget;
-				clickedTab.classList.add("active");
-				const tabContentPanes = document.querySelectorAll(".tab-pane");
-				for (let i = 0; i < tabContentPanes.length; i++) {
-					tabContentPanes[i].classList.remove("active");
-				}
-				const anchorReference = tabClickEvent.target;
-				const activePaneId = anchorReference.getAttribute("href");
-				const activePane = document.querySelector(activePaneId);
-				activePane.classList.add("active");
-			}
-			for (let i = 0; i < tabs.length; i++) {
-				tabs[i].addEventListener("click", onTabClick);
-			}
+			viewController.init();
 		});
 	</script>
 	<script src="js/htmlUtils.js"></script>
+	<script src="js/viewController.js"></script>
 	<script src="./js/patientData.js"></script>
 	<script src="js/vitalSigns.js"></script>
 	<script src="js/intakeOutput.js"></script>

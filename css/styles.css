@@ -194,14 +194,14 @@ option:not(:first-of-type) {
 
 			> a {
 				float: left;
-				margin-right: 2px;
+				margin-right: 4px;
 				line-height: 1.42857143;
 				padding: 10px;
 				border: 1px solid transparent;
 				border-radius: 4px 4px 0 0;
 				text-decoration: none;
-				color: #111;
-				background-color: rgb(211 211 211);
+				color: white;
+				background-color: rgb(95 95 95);
 
 				&:hover {
 					border-color: #eee #eee #ddd;
@@ -232,6 +232,7 @@ option:not(:first-of-type) {
 		overflow: hidden; */
 		position: relative;
 		border: 3px solid #a3b17a;
+		border-top-width: 6px;
 		box-sizing: border-box;
 		padding: 5px;
 		border-radius: 8px;

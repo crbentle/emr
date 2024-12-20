@@ -31,7 +31,7 @@ function htmlToNodes(html) {
 	return template.content.childNodes;
 }
 
-function findParentByType(childNode, parentType) {
+function findParentOfType(childNode, parentType) {
     const parent = childNode?.parentNode;
     const parentTag = parent?.tagName;
     if(!parentTag){

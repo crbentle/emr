@@ -9,10 +9,11 @@ const ADL_ACTIVITIES = [
 	},
 ];
 
-var adlController = (function () {
-	let patient;
-	function buildADLDisplay(mrn) {
-		patient = patientService.getPatient(mrn) || { mrn: mrn };
+var adlController = (function () {	
+	let patient, adlData;
+	function buildADLDisplay(patient) {
+		patient = patient;
+		adlData = patient?.adl?.find((data) => data.day === viewController.day) || { day: viewController.day };
 
 		const tbody = document.querySelector('#adl-tab-content table tbody');
 		tbody.replaceChildren(...buildADLRows());
@@ -24,7 +25,7 @@ var adlController = (function () {
 			const cols = [];
 			cols.push(createElement('td', {text: activity.name}));
 			['morning', 'afternoon', 'night'].forEach((shift) => {
-				const savedValue = patient?.adl?.[activity.name]?.[shift] || '';
+				const savedValue = adlData?.[activity.name]?.[shift] || '';
 				const options = activity.options.map((option) => {
 					return createElement('option', {
 						attributes: { value: option, ...(savedValue === option ? {selected: ''} : null) },
@@ -40,7 +41,7 @@ var adlController = (function () {
 
 				select.onchange = (event) => {
 					const value = event.target.value;
-					const td = findParentByType(select, 'td');
+					const td = findParentOfType(select, 'td');
 					const span = td.querySelector('.adl-data') || td.appendChild(createElement('span', {attributes: {class: 'adl-data'}}));
 					span.innerHTML = value;
 
@@ -55,12 +56,13 @@ var adlController = (function () {
 	}
 
 	function saveSelection(activity, shift, value) {
-		const adl = patient.adl || {};
-		if(!adl[activity]){
-			adl[activity] = {};
+		if(!adlData[activity]){
+			adlData[activity] = {};
 		}
-		adl[activity][shift] = value;
-		patient.adl = adl;
+		adlData[activity][shift] = value;
+		// Only keep the last 3 histories
+		patient.adl = (patient.adl?.filter((adl) => adl.day !== viewController.day) || []).concat([adlData]).slice(-3);
+
 		patientService.saveData(patient.mrn, patient);
 		
 	}

@@ -11,12 +11,11 @@ var intakeAndOutputController = (function () {
 		'output.other',
 	];
 	const SHIFTS = ['morning', 'afternoon', 'night'];
-	let patient, ioData, day;
+	let patient, ioData;
 
-	function buildIntakeAndOutputDisplay(mrn) {
-		patient = patientService.getPatient(mrn) || { mrn: mrn };
-		day = getDateString(new Date());
-		ioData = patient?.io?.find((data) => data.day === day) || { day: day };
+	function buildIntakeAndOutputDisplay(patient) {
+		patient = patient;
+		ioData = patient?.io?.find((data) => data.day === viewController.day) || { day: viewController.day };
 
 		const container = document.getElementById('intake_output_content');
 		container.replaceChildren(...buildIOTables(ioData));
@@ -198,17 +197,6 @@ var intakeAndOutputController = (function () {
 	}
 
 	/**
-	 * Return the Date, formatted to an ISO-8601 date (yyyy-mm-dd).
-	 *
-	 * @param {Date} date The date to format
-	 * @returns The date in ISO-8601 format (yyyy-mm-dd)
-	 */
-	function getDateString(date) {
-		// toISOString always returns UTC time. Subtract the timezone offset (converted to miliseconds) to get the local date.
-		return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().substring(0, 10);
-	}
-
-	/**
 	 * Save the event target's value to local storage.
 	 *
 	 * This method will build out the necessary patient.io structure if this is the first time 
@@ -234,7 +222,7 @@ var intakeAndOutputController = (function () {
 			ioData[hour][type][field] = value;
 
 			// Only keep the last 3 histories
-			patient.io = (patient.io?.filter((io) => io.day !== day) || []).concat([ioData]).slice(-3);
+			patient.io = (patient.io?.filter((io) => io.day !== viewController.day) || []).concat([ioData]).slice(-3);
 
 			patientService.saveData(patient.mrn, patient);
 
