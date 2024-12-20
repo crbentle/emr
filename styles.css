@@ -60,11 +60,11 @@ body {
 	text-align: center;
 }
 
-select {
+/* select {
 	padding: 10px;
 	font-size: 1.5em;
 	color: gray;
-}
+} */
 
 option:not(:first-of-type) {
 	color: #232222;
@@ -468,6 +468,18 @@ input::placeholder {
 	}
 }
 
+.morning-bg {
+	background-color: #bddcbd;
+}
+
+.afternoon-bg {
+	background-color: #d2dcbd;
+}
+
+.night-bg {
+	background-color: #bdcadc;
+}
+
 .io-table {
     width: 100%;
     border-collapse: collapse;
@@ -545,6 +557,46 @@ input::placeholder {
 		text-align: right;
 		border: none;
 		padding-right: 5px;
+	}
+}
+
+.adl-table {
+    width: 100%;
+    border-collapse: collapse;
+
+	td, th {
+		border: 1px solid black;
+		min-width: 50px;
+		padding: 3px 5px;
+		text-align: center;
+		position: relative;
+	}
+
+	td:first-child {
+		text-align: left;
+	}
+
+	td:focus-within {
+		outline-style: solid;
+    	outline-offset: -2px;
+	}
+
+	select {
+		opacity: 0;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		cursor: pointer;
+	}
+
+	/* select:focus:focus-within {
+		margin-top: -1.75em;
+	} */
+
+	option {
+		text-align: center;
 	}
 }
 

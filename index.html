@@ -49,17 +49,17 @@
 			<div class="container--tabs">
 				<section class="row">
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#vs-tab">Vital Signs</a></li>
-						<li class=""><a href="#intake_output-tab">Intake & Output</a></li>
-						<li class=""><a href="#tab-3">ADL</a></li>
+						<li id="vs-tab" class="active"><a href="#vs-tab-content">Vital Signs</a></li>
+						<li id="intake_output-tab" class=""><a href="#intake_output-tab-content">Intake & Output</a></li>
+						<li id="adl-tab" class=""><a href="#adl-tab-content">ADL</a></li>
 					</ul>
 					<div class="tab-content">
-						<div id="vs-tab" class="tab-pane active">
+						<div id="vs-tab-content" class="tab-pane active">
 							<form id="vital-sign-form" autocomplete="off">
 								<div id="vs-form-content"></div>
 							</form>
 						</div>
-						<div id="intake_output-tab" class="tab-pane">
+						<div id="intake_output-tab-content" class="tab-pane">
 							<template id="io-table-template">
 								<table class="io-table" cellspacing="0">
 									<caption>Shift</caption>
@@ -140,13 +140,22 @@
 							</table>
 
 						</div>
-						<div id="tab-3" class="tab-pane">
-							<span
-								class="glyphicon glyphicon-tint glyphicon--home--feature two columns text-center"></span>
-							<span class="col-md-10">
-								<h3>Feature 3</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-							</span>
+						<div id="adl-tab-content" class="tab-pane">
+							<table class="adl-table" cellspacing="0">
+								<thead>
+									<tr>
+										<th rowspan="2">Activity</th>
+										<th colspan="3">Shift</th>
+									</tr>
+									<tr>
+										<th class="morning-bg">07:00-15:00</th>
+										<th class="afternoon-bg">15:00-23:00</th>
+										<th class="night-bg">23:00-07:00</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</section>
@@ -186,6 +195,8 @@
 					return;
 				}
 
+				// resetTabs();
+
 				showView("patient-chart");
 				document.getElementById("patient-info").classList.remove("hidden");
 
@@ -197,6 +208,17 @@
 
 				vitalSignsController.buildVitalSignsTable(mrn);
 				intakeAndOutputController.buildIntakeAndOutputDisplay(mrn);
+				adlController.buildADLDisplay(mrn);
+			}
+
+			function resetTabs() {
+				document.querySelectorAll('.nav-tabs li, .tab-pane').forEach(node => {
+					node.classList.remove('active');
+				});
+
+				document.querySelectorAll('#vs-tab, #vs-tab-content').forEach(node => {
+					node.classList.add('active');
+				});
 			}
 
 			function buildPatientSelect() {
@@ -266,6 +288,7 @@
 	<script src="./js/patientData.js"></script>
 	<script src="js/vitalSigns.js"></script>
 	<script src="js/intakeOutput.js"></script>
+	<script src="js/adl.js"></script>
 </body>
 
 </html>
