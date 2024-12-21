@@ -11,8 +11,8 @@ const ADL_ACTIVITIES = [
 
 var adlController = (function () {	
 	let patient, adlData;
-	function buildADLDisplay(patient) {
-		patient = patient;
+	function buildADLDisplay(viewPatient) {
+		patient = viewPatient;
 		adlData = patient?.adl?.find((data) => data.day === viewController.day) || { day: viewController.day };
 
 		const tbody = document.querySelector('#adl-tab-content table tbody');

@@ -1,8 +1,7 @@
 var vitalSignsController = (function () {
 	let saveHandler;
-	function buildVitalSignsTable(patient, options = {}) {
+	function buildVitalSignsTable(mrn, options = {}) {
 		const { editDate, savedDate } = options;
-		let mrn = patient?.mrn;
 
 		// TODO: Save vital signs in order so we don't need to sort
 

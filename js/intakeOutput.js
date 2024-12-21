@@ -13,8 +13,8 @@ var intakeAndOutputController = (function () {
 	const SHIFTS = ['morning', 'afternoon', 'night'];
 	let patient, ioData;
 
-	function buildIntakeAndOutputDisplay(patient) {
-		patient = patient;
+	function buildIntakeAndOutputDisplay(viewPatient) {
+		patient = viewPatient;
 		ioData = patient?.io?.find((data) => data.day === viewController.day) || { day: viewController.day };
 
 		const container = document.getElementById('intake_output_content');

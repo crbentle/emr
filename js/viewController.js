@@ -51,7 +51,6 @@ var viewController = (function () {
 
 	function loginSubmit(event) {
 		event.preventDefault();
-		console.log(event);
 
 		showView('patient-search');
 	}
@@ -115,6 +114,7 @@ var viewController = (function () {
 
 	function displayPatientInfo(mrn) {
 		patient = patientService.getPatient(mrn);
+        
 		if (!patient) {
 			return;
 		}
@@ -128,7 +128,7 @@ var viewController = (function () {
 		document.getElementById('dob').textContent = patient.dateOfBirth;
 		document.getElementById('age').textContent = patient.age;
 
-		vitalSignsController.buildVitalSignsTable(patient);
+		vitalSignsController.buildVitalSignsTable(patient.mrn);
 		intakeAndOutputController.buildIntakeAndOutputDisplay(patient);
 		adlController.buildADLDisplay(patient);
 	}
