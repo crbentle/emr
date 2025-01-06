@@ -29,7 +29,7 @@ var viewController = (function () {
 			patientInfoDiv.classList.add('hidden');
 		});
 
-		showView('patient-search');
+		showView('signin');
 	}
 
 	/**
@@ -55,9 +55,9 @@ var viewController = (function () {
 		showView('patient-search');
 	}
 
-    /**
-     * Loop through all mock patients and build a patient selection view.
-     */
+	/**
+	 * Loop through all mock patients and build a patient selection view.
+	 */
 	function buildPatientSelect() {
 		let patientCards = patientData.map((patient) => {
 			const card = document.createElement('div');
@@ -86,9 +86,9 @@ var viewController = (function () {
 		document.getElementById('patient-cards').replaceChildren(...patientCards);
 	}
 
-    /**
-     * Handles hidding and displaying tab content when a tab is selected.
-     */
+	/**
+	 * Handles hidding and displaying tab content when a tab is selected.
+	 */
 	function setupTabs() {
 		const tabs = document.querySelectorAll('ul.nav-tabs > li');
 		function onTabClick(tabClickEvent) {
@@ -97,6 +97,7 @@ var viewController = (function () {
 				tabs[i].classList.remove('active');
 			}
 			const clickedTab = tabClickEvent.currentTarget;
+
 			clickedTab.classList.add('active');
 			const tabContentPanes = document.querySelectorAll('.tab-pane');
 			for (let i = 0; i < tabContentPanes.length; i++) {
@@ -114,7 +115,7 @@ var viewController = (function () {
 
 	function displayPatientInfo(mrn) {
 		patient = patientService.getPatient(mrn);
-        
+
 		if (!patient) {
 			return;
 		}
@@ -131,7 +132,14 @@ var viewController = (function () {
 		vitalSignsController.buildVitalSignsTable(patient.mrn);
 		intakeAndOutputController.buildIntakeAndOutputDisplay(patient);
 		adlController.buildADLDisplay(patient);
+		notesController.initPatient(patient);
 	}
 
-	return { init, day, patient };
+	return {
+		init,
+		day,
+		get patient() {
+			return patient;
+		}
+	};
 })();

@@ -20,7 +20,7 @@ function createElement(type, { attributes, childNodes, text } = {}) {
 }
 
 /**
- * Convert an HTML string into a list NodeList.
+ * Convert an HTML string into a NodeList.
  *
  * @param {String} HTML representing any number of sibling nodes
  * @return {NodeList}
@@ -41,5 +41,9 @@ function findParentOfType(childNode, parentType) {
         return parent;
     }
     return findParentType(parent, parentType);
+}
 
+function highlightSave(node) {
+	node.classList.add('save-flash');
+	node.addEventListener('animationend', () => node.classList.remove('save-flash'), false);
 }
