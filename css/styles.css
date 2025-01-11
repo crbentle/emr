@@ -1,3 +1,11 @@
+:root {
+	--color-abnormal: red;
+	--color-save-pulse: #efd957;
+	--color-shift-morning: #bddcbd;
+	--color-shift-afternoon: #d2dcbd;
+	--color-shift-night: #bdcadc;
+}
+
 body {
 	background-color: #f6f6f6;
 	color: #232222;
@@ -17,474 +25,212 @@ body {
 	box-shadow: 5px 5px 5px 0px #a2a2a2;
 	border-radius: 10px;
 	padding: 20px;
+
+	&.active {
+		display: block;
+	}
+
+	h1 {
+		margin-top: 0;
+	}
 }
 
-.view.active {
-	display: block;
-}
-
-.view h1 {
-	margin-top: 0;
-}
-
+/* Sign-in */
 #view-signin {
 	background-color: #d7d7d7;
 	max-width: 400px;
 	margin: 10% auto;
+
+	input {
+		width: 100%;
+		border-radius: 5px;
+		border-width: 1px;
+		padding: 5px;
+		margin: 5px 0;
+	}
+
+	button {
+		margin-top: 10px;
+		float: right;
+		min-width: 80px;
+	}
+
+	button:focus {
+		outline: 1px #252525 solid;
+	}
+
+	#login {
+		margin-top: 0;
+		text-align: center;
+	}
 }
 
-#view-signin input {
-	width: 100%;
-	border-radius: 5px;
-	border-width: 1px;
-	padding: 5px;
-	margin: 5px 0;
-}
+/* Patient Search */
+#view-patient-search {
+	#patient-cards {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 10px;
+	}
 
-#view-signin button {
-	margin-top: 10px;
-	float: right;
-	min-width: 80px;
-}
+	.patient-card:hover {
+		box-shadow: 2px 2px 5px 0px #acacac;
+	}
 
-#view-signin button:focus {
-	outline: 1px #252525 solid;
+	.patient-card {
+		border: 1px solid black;
+		border-radius: 8px;
+		background-color: #a9ceb1;
+		padding: 5px;
+		cursor: pointer;
+	}
+
+	.patient-img {
+		width: 75px;
+		height: auto;
+		box-sizing: border-box;
+		float: left;
+		margin-right: 10px;
+	}
 }
 
 #view-patient-chart {
 	padding: 0;
 }
 
-#login {
-	margin-top: 0;
-	text-align: center;
-}
-
-/* select {
-	padding: 10px;
-	font-size: 1.5em;
-	color: gray;
-} */
-
-option:not(:first-of-type) {
-	color: #232222;
-}
-
+/* Patient info header */
 #patient-info {
 	padding: 0 10px;
-}
 
-#patient-info #patient-title {
-	/* width: 100%; */
-	display: block;
-	margin: 0 -10px;
-	background-color: #b2b2b2;
-	padding: 5px 10px;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-}
-
-#patient-info #patient-name {
-	font-size: 1.2em;
-	font-weight: bold;
-}
-
-#patient-info div {
-	display: inline-block;
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
-#patient-info span {
-	margin-right: 15px;
-}
-
-.hidden {
-	display: none;
-}
-
-.clearfix::after {
-	content: " ";
-	display: table;
-	clear: both;
-}
-/*  */
-.btn.btn-blue {
-	background-color: #5e92d0;
-	color: white;
-}
-.btn.btn-blue:hover, .btn.btn-blue:active, .btn.btn-blue:focus {
-	background-color: #3c7fd0;
-}
-.btn.btn-green {
-	background-color: #3fb855;
-	color: white;
-}
-.btn.btn-green:hover, .btn.btn-green:active, .btn.btn-green:focus {
-	background-color: #309d44;
-}
-.btn {
-	appearance: none;
-	background-color: #fafbfc;
-	border: 1px solid rgba(27, 31, 35, 0.15);
-	border-radius: 6px;
-	box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
-	box-sizing: border-box;
-	color: #24292e;
-	cursor: pointer;
-	font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji",
-		"Segoe UI Emoji";
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 20px;
-	padding: 6px 16px;
-	position: relative;
-	transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
-	white-space: nowrap;
-	word-wrap: break-word;
-}
-.btn-small {
-	font-size: 0.8em;
-	padding: 0 5px;
-}
-
-.btn:hover {
-	background-color: #f3f4f6;
-	text-decoration: none;
-	transition-duration: 0.1s;
-}
-
-.btn:disabled {
-	background-color: #fafbfc;
-	border-color: rgba(27, 31, 35, 0.15);
-	color: #959da5;
-	cursor: default;
-}
-
-.btn:active {
-	background-color: #edeff2;
-	box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
-	transition: none 0s;
-	transform: translate(1px, 2px);
-}
-
-.btn:focus {
-	outline: 1px transparent;
-	border: 1px solid black;
-}
-
-/* https://codepen.io/inupurnomo/pen/MWWRmQr */
-/* https://www.w3schools.com/howto/howto_js_tabs.asp */
-/* https://codepen.io/serhatbek/pen/bGyVLpM */
-/* https://codepen.io/carolyngreenough/pen/MawmVb */
-.container--tabs {
-	/* margin: 1rem 0.5rem; */
-	margin-top: 1rem;
-
-	.nav-tabs {
-		/* float: left; */
-		/* width: 100%; */
-		margin: 0;
-		list-style-type: none;
-		/* border-bottom: 2px solid #ddd; */
-		/* padding: 0; */
-		height: 2.65em;
-
-		> li {
-			float: left;
-			margin-bottom: -1px;
-
-			> a {
-				float: left;
-				margin-right: 4px;
-				line-height: 1.42857143;
-				padding: 10px;
-				border: 1px solid transparent;
-				border-radius: 4px 4px 0 0;
-				text-decoration: none;
-				color: white;
-				background-color: rgb(95 95 95);
-
-				&:hover {
-					border-color: #eee #eee #ddd;
-				}
-			}
-
-			&.active {
-				> a,
-				> a:hover,
-				> a:focus {
-					color: #555;
-					/* font-weight: bold; */
-					text-shadow: 1px 0px 0px black;
-					cursor: default;
-					background-color: rgb(159 178 114);
-					border: 1px solid #ddd;
-					border-bottom-color: transparent;
-				}
-			}
-		}
+	#patient-title {
+		display: block;
+		margin: 0 -10px;
+		background-color: #b2b2b2;
+		padding: 5px 10px;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
 	}
 
-	.tab-content {
-		/* float: left; */
+	#patient-name {
+		font-size: 1.2em;
+		font-weight: bold;
+	}
+
+	div {
+		display: inline-block;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+
+	span {
+		margin-right: 15px;
+	}
+}
+
+/* Vital Signs */
+#vs-form-content {
+	.vital-sign-grid-row > div {
+		padding: 3px 0;
+	}
+
+	.vital-sign-label {
+		justify-self: start;
+		font-weight: bold;
+		white-space: nowrap;
+	}
+
+	.vital-sign-input {
+		justify-self: end;
+		border-left: 1px solid gray;
 		width: 100%;
-		/* border: 2px solid rgb(159 178 114);
-		border-radius: 8px;
-		overflow: hidden; */
-		position: relative;
-		border: 3px solid #a3b17a;
-		border-top-width: 6px;
-		box-sizing: border-box;
-		padding: 5px;
-		border-radius: 8px;
+		text-align: center;
+	}
+	.vital-input-container {
+		padding-left: 10px;
+		display: flex;
+	}
 
-		> .tab-pane {
-			display: none;
+	#vital-sign-save-btn {
+		display: flex;
+		margin: 10px 10px 5px auto;
+	}
 
-			> .active {
-				display: block;
-				padding: 2.5% 3.5%;
-				background-color: #efefef;
-				font-weight: bold;
-			}
-		}
+	.btn-vs-edit {
+		padding: 6px 4px;
+		flex: 1 1 0px;
+	}
 
-		> .active {
-			display: block;
-		}
+	.edit-button-wrapper {
+		display: flex;
+		justify-content: space-between;
+		column-gap: 10px;
+		padding: 13px 3px 6px 10px;
+	}
+
+	.vital-sign-history-time {
+		font-size: small;
+		display: block;
+		text-align: center;
+	}
+
+	.vs-table {
+		width: 100%;
+		border: 0;
+		border-collapse: collapse;
+	}
+
+	.vs-table th:not(:first-child) {
+		width: 19%;
+		font-weight: normal;
+	}
+
+	.vs-table thead {
+		border-bottom: 1px solid black;
+	}
+
+	.vs-table tr td:last-of-type,
+	.vs-table tr th:last-of-type {
+		border-left: 1px solid black;
+		padding: 3px 0;
+	}
+
+	.vs-time {
+		font-size: small;
+		display: block;
+		text-align: center;
+	}
+
+	.vs-table td {
+		text-align: center;
+	}
+
+	.vs-table .vital-sign-label {
+		text-align: left;
+	}
+
+	.vs-edit:after {
+		content: '\270E';
+		cursor: pointer;
+		color: green;
+		position: absolute;
+		margin-top: -3px;
+		margin-left: 3px;
+	}
+
+	.vs-delete:after {
+		content: '\1F5D1';
+		cursor: pointer;
+		color: red;
+		position: absolute;
+		margin-top: -3px;
+		margin-left: 3px;
 	}
 }
 
-/* Grid Test */
-
-.vital-sign-grid-row {
-	display: grid;
-	grid-template-columns: [first] 2fr [line2] 1fr [line3] 1fr [col4-start] 1fr [five] 1.5fr [end];
-	column-gap: 5px;
-	align-items: center;
-	justify-items: center;
-	/* padding: 3px 0; */
-	max-width: 800px;
-}
-
-.vital-sign-grid-row > div {
-	padding: 3px 0;
-}
-
-.vital-sign-label {
-	justify-self: start;
-	font-weight: bold;
-	white-space: nowrap;
-}
-
-.vital-sign-labels {
-    justify-self: start;
-    font-weight: bold;
-    white-space: nowrap;
-    display: flex;
-    flex-direction: column;
-    row-gap: 6px;
-}
-
-.vital-sign-input {
-	justify-self: end;
-	border-left: 1px solid gray;
-	/* padding-left: 10px; */
-	width: 100%;
-	text-align: center;
-
-	/* input[size="3"] {
-		width: 44%;
-	} */
-}
-.vital-input-container {
-	padding-left: 10px;
-	display: flex;
-}
-/* End Grid Test */
-
-#vital-sign-form label {
-	width: 150px;
-	display: inline-block;
-}
-
-#vital-sign-save-btn {
-	display: flex;
-	margin: 10px 10px 5px auto;
-}
-
-#vital-sign-save-btn:active {
-    transform: translate(1px, 1px);
-}
-
-.btn-vs-edit {
-    padding: 6px 4px;
-    background-color: #7492cb;
-    flex: 1 1 0px;
-}
-
-.edit-button-wrapper {
-    display: flex;
-    justify-content: space-between;
-    column-gap: 10px;
-    padding: 13px 3px 6px 10px;
-}
-
-.vital-sign-history-time {
-    font-size: small;
-    display: block;
-    text-align: center;
-}
-
-.vs-table {
-    width: 100%;
-    border: 0;
-    border-collapse: collapse;
-}
-
-.vs-table th:not(:first-child) {
-    width: 19%;
-    font-weight: normal;
-}
-
-.vs-table thead {
-    border-bottom: 1px solid black;
-}
-
-.vs-table tr td:last-of-type, .vs-table tr th:last-of-type {
-    border-left: 1px solid black;
-    padding: 3px 0;
-}
-
-.vs-time {
-    font-size: small;
-    display: block;
-    text-align: center;
-}
-
-.vs-table td {
-    text-align: center;
-}
-
-.vs-table .vital-sign-label {
-    text-align: left;
-}
-
-.vs-edit:after {
-    content: "\270E";
-    cursor: pointer;
-    color: green;
-    position: absolute;
-    margin-top: -3px;
-    margin-left: 3px;
-}
-
-.vs-delete:after {
-    content: "\1F5D1";
-    cursor: pointer;
-    color: red;
-    position: absolute;
-    margin-top: -3px;
-    margin-left: 3px;
-}
-
-form {
-	margin-top: 0.5em;
-}
-
-input {
-	width: 100%;
-	box-sizing: border-box;
-	text-align: center;
-}
-
-input[type="number"][size="3"] {
-	width: 3em;
-}
-input::placeholder {
-	opacity: 0.8;
-	font-size: 0.8em;
-}
-
-.abnormal {
-	background-color: red;
-	font-weight: bold;
-}
-
-/* #patient-cards-wrapper {
-	display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  max-height: calc(100vh - 60px - 4em)
-} */
-
-#patient-cards {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 10px;
-	overflow: auto;
-}
-
-.patient-card {
-	/* width: 50%; */
-	border: 1px solid black;
-	border-radius: 8px;
-	background-color: #a9ceb1;
-	padding: 5px;
-	cursor: pointer;
-}
-.patient-img {
-	width: 75px;
-	height: auto;
-	/* margin-top: 4px; */
-	/* background: url(./img/bust-in-silhouette.svg) no-repeat center / contain; */
-	/* border: 1px solid #d3d3d3; */
-	box-sizing: border-box;
-	float: left;
-	margin-right: 10px;
-}
-
-.bold {
-	font-weight: bold;
-}
-
-.mx-2 {
-	margin-left: 2px;
-	margin-right: 2px;
-}
-
-.float-right {
-	float: right;
-}
-
-.save-flash {
-	animation: savepulse 4s;
-}
-@keyframes savepulse {
-	0%,
-	100% {
-		background-color: transparent;
-	}
-	50% {
-		background-color: #efd957;
-	}
-}
-
-.morning-bg {
-	background-color: #bddcbd;
-}
-
-.afternoon-bg {
-	background-color: #d2dcbd;
-}
-
-.night-bg {
-	background-color: #bdcadc;
-}
-
+/* Intake & Output */
 .io-table {
-    width: 100%;
-    border-collapse: collapse;
+	width: 100%;
+	border-collapse: collapse;
 
 	& ~ .io-table {
 		margin-top: 20px;
@@ -494,21 +240,6 @@ input::placeholder {
 		border: 3px solid black;
 		border-collapse: collapse;
 		border-bottom: none;
-		font-weight: bold;
-	}
-
-	.io-morning-bg {
-		background-color: #bddcbd;
-		font-weight: bold;
-	}
-
-	.io-afternoon-bg {
-		background-color: #d2dcbd;
-		font-weight: bold;
-	}
-
-	.io-night-bg {
-		background-color: #bdcadc;
 		font-weight: bold;
 	}
 
@@ -524,7 +255,8 @@ input::placeholder {
 		border: 3px solid black;
 	}
 
-	td, th {
+	td,
+	th {
 		border: 1px solid black;
 		min-width: 50px;
 		text-align: center;
@@ -562,11 +294,13 @@ input::placeholder {
 	}
 }
 
+/* ADL */
 .adl-table {
-    width: 100%;
-    border-collapse: collapse;
+	width: 100%;
+	border-collapse: collapse;
 
-	td, th {
+	td,
+	th {
 		border: 1px solid black;
 		min-width: 50px;
 		padding: 3px 5px;
@@ -580,7 +314,7 @@ input::placeholder {
 
 	td:focus-within {
 		outline-style: solid;
-    	outline-offset: -2px;
+		outline-offset: -2px;
 	}
 
 	select {
@@ -593,67 +327,60 @@ input::placeholder {
 		cursor: pointer;
 	}
 
-	/* select:focus:focus-within {
-		margin-top: -1.75em;
-	} */
-
 	option {
 		text-align: center;
 	}
 }
 
+/* Notes */
 #notes-tab-content {
 	position: relative;
-    /* overflow: hidden; */
 
 	#notes-container {
 		display: flex;
 		flex-flow: column;
-		/* max-height: 400px; */
 		max-height: calc(100vh - 200px);
 	}
 
 	.note {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
+		display: flex;
+		flex-direction: row;
+		gap: 10px;
 		position: relative;
-        border: 1px solid gray;
-        padding: 3px 10px;
-        border-radius: 4px;
-        background-color: #fbfbfb;
-        cursor: pointer;
-        margin: 5px;
-        box-sizing: border-box;
+		border: 1px solid gray;
+		padding: 3px 10px;
+		border-radius: 4px;
+		background-color: #fbfbfb;
+		cursor: pointer;
+		margin: 5px;
+		box-sizing: border-box;
 
 		.date {
 			font-size: smaller;
-            text-align: center;
-            border-right: 1px solid lightgrey;
-            padding-right: 5px;	
+			text-align: center;
+			border-right: 1px solid lightgrey;
+			padding-right: 5px;
 			align-self: stretch;
 		}
 
 		&.open .note-text {
-			/* max-height: initial; */
 			-webkit-line-clamp: unset;
 			line-clamp: unset;
 		}
 
 		.note-text {
 			display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            overflow: hidden;
-            /* max-height: calc(2lh + 8px); */
-            flex-grow: 1;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			line-clamp: 2;
+			overflow: hidden;
+			flex-grow: 1;
 			align-self: center;
-		}		
+		}
 	}
 
 	button#new-note:before {
-		content: "\0002B";
+		content: '\0002B';
 		margin-right: 10px;
 	}
 
@@ -668,7 +395,7 @@ input::placeholder {
 	}
 	#note-input-container.accordion.show {
 		height: auto;
-	}	
+	}
 
 	.button-container {
 		display: flex;
@@ -685,41 +412,235 @@ input::placeholder {
 		width: calc(100% - 20px);
 		height: 100px;
 		resize: none;
-        margin: 10px;
+		margin: 10px;
 	}
 
 	&.show-input #note-text {
 		height: 100px;
-		/* margin: initial;
-		padding: initial;
-		border-width: .8px; */
 	}
 
 	#note-input-counter {
 		position: absolute;
 		bottom: -20px;
 		left: 15px;
-		opacity: .9;
+		opacity: 0.9;
 		font-size: 90%;
 	}
-
-	/* &.hide-input #note-text {
-		height: 0;
-		border-width: 0;
-		padding: 0;
-		margin: 0;
-	} */
-
-	/* &.show-input .note-list {
-		display: none;
-	} */
-	/* &.hide-input .note-list {
-		display: block;
-	} */
 
 	.note-list {
 		overflow: auto;
 	}
+}
+
+/* Tabs */
+.container--tabs {
+	margin-top: 1rem;
+
+	.nav-tabs {
+		margin: 0;
+		list-style-type: none;
+		height: 2.65em;
+
+		> li {
+			float: left;
+			margin-bottom: -1px;
+
+			> a {
+				float: left;
+				margin-right: 4px;
+				line-height: 1.42857143;
+				padding: 10px;
+				border: 1px solid transparent;
+				border-radius: 4px 4px 0 0;
+				text-decoration: none;
+				color: white;
+				background-color: rgb(95 95 95);
+
+				&:hover {
+					border-color: #eee #eee #ddd;
+				}
+			}
+
+			&.active {
+				> a,
+				> a:hover,
+				> a:focus {
+					color: #555;
+					text-shadow: 1px 0px 0px black;
+					cursor: default;
+					background-color: rgb(159 178 114);
+					border: 1px solid #ddd;
+					border-bottom-color: transparent;
+				}
+			}
+		}
+	}
+
+	.tab-content {
+		width: 100%;
+		position: relative;
+		border: 3px solid #a3b17a;
+		border-top-width: 6px;
+		box-sizing: border-box;
+		padding: 5px;
+		border-radius: 8px;
+
+		> .tab-pane {
+			display: none;
+
+			> .active {
+				display: block;
+				padding: 2.5% 3.5%;
+				background-color: #efefef;
+				font-weight: bold;
+			}
+		}
+
+		> .active {
+			display: block;
+		}
+	}
+}
+
+/* Buttons */
+.btn {
+	appearance: none;
+	background-color: #fafbfc;
+	border: 1px solid rgba(27, 31, 35, 0.15);
+	border-radius: 6px;
+	box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+	box-sizing: border-box;
+	color: #24292e;
+	cursor: pointer;
+	font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+		'Segoe UI Emoji';
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 20px;
+	padding: 6px 16px;
+	position: relative;
+	transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+	white-space: nowrap;
+	word-wrap: break-word;
+
+	&.btn-small {
+		font-size: 0.8em;
+		padding: 0 5px;
+	}
+
+	&:hover {
+		background-color: #f3f4f6;
+		text-decoration: none;
+		transition-duration: 0.1s;
+	}
+
+	&:disabled {
+		background-color: #fafbfc;
+		border-color: rgba(27, 31, 35, 0.15);
+		color: #959da5;
+		cursor: default;
+	}
+
+	&:active {
+		background-color: #edeff2;
+		box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+		transition: none 0s;
+		transform: translate(1px, 2px);
+	}
+
+	&:focus {
+		outline: 1px transparent;
+		border: 1px solid black;
+	}
+
+	&.btn-blue {
+		background-color: #5e92d0;
+		color: white;
+
+		&:hover,
+		&:active,
+		&:focus {
+			background-color: #3c7fd0;
+		}
+	}
+
+	&.btn-green {
+		background-color: #3fb855;
+		color: white;
+
+		&:hover,
+		&:active,
+		&:focus {
+			background-color: #309d44;
+		}
+	}
+}
+
+.hidden {
+	display: none;
+}
+
+.clearfix::after {
+	content: ' ';
+	display: table;
+	clear: both;
+}
+
+form {
+	margin-top: 0.5em;
+}
+
+input {
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+input[type='number'][size='3'] {
+	width: 3em;
+}
+input::placeholder {
+	opacity: 0.8;
+	font-size: 0.8em;
+}
+
+.abnormal {
+	background-color: var(--color-abnormal);
+	font-weight: bold;
+}
+
+.mx-2 {
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+.float-right {
+	float: right;
+}
+
+.save-flash {
+	animation: savepulse 4s;
+}
+@keyframes savepulse {
+	0%,
+	100% {
+		background-color: transparent;
+	}
+	50% {
+		background-color: var(--color-save-pulse);
+	}
+}
+
+.morning-bg {
+	background-color: var(--color-shift-morning);
+}
+
+.afternoon-bg {
+	background-color: var(--color-shift-afternoon);
+}
+
+.night-bg {
+	background-color: var(--color-shift-night);
 }
 
 .accordion {
@@ -731,14 +652,4 @@ input::placeholder {
 
 .mt-20 {
 	margin-top: 20px;
-}
-
-.grow {
-	-moz-transition: height .5s;
-	-ms-transition: height .5s;
-	-o-transition: height .5s;
-	-webkit-transition: height .5s;
-	transition: height .5s;
-	height: 0;
-	overflow: hidden;
 }

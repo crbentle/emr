@@ -51,7 +51,6 @@ var viewController = (function () {
 
 	function loginSubmit(event) {
 		event.preventDefault();
-
 		showView('patient-search');
 	}
 
@@ -68,8 +67,7 @@ var viewController = (function () {
 			img.src = './img/bust-in-silhouette.svg';
 			card.appendChild(img);
 
-			const name = document.createElement('div');
-			name.className = 'bold';
+			const name = document.createElement('strong');
 			name.appendChild(document.createTextNode(`${patient.lastName}, ${patient.firstName} (${patient.mrn})`));
 			card.appendChild(name);
 
@@ -87,7 +85,7 @@ var viewController = (function () {
 	}
 
 	/**
-	 * Handles hidding and displaying tab content when a tab is selected.
+	 * Handles hiding and displaying tab content when a tab is selected.
 	 */
 	function setupTabs() {
 		const tabs = document.querySelectorAll('ul.nav-tabs > li');
@@ -140,6 +138,6 @@ var viewController = (function () {
 		day,
 		get patient() {
 			return patient;
-		}
+		},
 	};
 })();

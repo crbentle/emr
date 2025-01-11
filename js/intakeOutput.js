@@ -48,7 +48,7 @@ var intakeAndOutputController = (function () {
 		const table = document.querySelector('#io-table-template').content.cloneNode(true).querySelector('table');
 		table.id = `io-${shift}`;
 		const caption = table.querySelector('caption');
-		caption.classList.add(`io-${shift}-bg`);
+		caption.classList.add(`${shift}-bg`);
 		caption.innerHTML = getShiftTitle(shift);
 
 		const tbody = table.querySelector('tbody');
