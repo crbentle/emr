@@ -1,23 +1,14 @@
 /**
- * Return the Date, formatted to an ISO-8601 date (yyyy-mm-dd).
- * If no date is passed in, the current date will be used.
- *
- * @param {Date} date The date to format
- * @returns The date in ISO-8601 format (yyyy-mm-dd)
+ * This controller handles showing and hiding the different parts of the application.
+ * Change `initialView` to "patient-search" to skip the login screen.
  */
-const getDateString = (date) => {
-	if (!date) {
-		date = new Date();
-	}
-	// toISOString always returns UTC time. Subtract the timezone offset (converted to miliseconds) to get the local date.
-	return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().substring(0, 10);
-};
-
 var viewController = (function () {
+	const initialView = 'signin';
 	let patient;
-	const day = getDateString();
+	let day;
 
 	function init() {
+		day = getDateString();
 		setupTabs();
 		buildPatientSelect();
 
@@ -29,7 +20,7 @@ var viewController = (function () {
 			patientInfoDiv.classList.add('hidden');
 		});
 
-		showView('signin');
+		showView(initialView);
 	}
 
 	/**
@@ -111,6 +102,11 @@ var viewController = (function () {
 		}
 	}
 
+	/**
+	 * Display the patient info header and initialize the content view controllers.
+	 *
+	 * @param {Number} mrn The MRN of the patient to display
+	 */
 	function displayPatientInfo(mrn) {
 		patient = patientService.getPatient(mrn);
 
@@ -135,9 +131,26 @@ var viewController = (function () {
 
 	return {
 		init,
-		day,
+		get day() {
+			return day;
+		},
 		get patient() {
 			return patient;
 		},
 	};
 })();
+
+/**
+ * Return the Date, formatted to an ISO-8601 date (yyyy-mm-dd).
+ * If no date is passed in, the current date will be used.
+ *
+ * @param {Date} date The date to format
+ * @returns The date in ISO-8601 format (yyyy-mm-dd)
+ */
+const getDateString = (date) => {
+	if (!date) {
+		date = new Date();
+	}
+	// toISOString always returns UTC time. Subtract the timezone offset (converted to miliseconds) to get the local date.
+	return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().substring(0, 10);
+};

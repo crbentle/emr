@@ -1,9 +1,10 @@
+/**
+ * Handles logic in the Vital Signs tab
+ */
 var vitalSignsController = (function () {
 	let saveHandler;
 	function buildVitalSignsTable(mrn, options = {}) {
 		const { editDate, savedDate } = options;
-
-		// TODO: Save vital signs in order so we don't need to sort
 
 		// Get saved vital signs
 		let vitalSigns = [...getVitalSigns(mrn)]
@@ -113,7 +114,6 @@ var vitalSignsController = (function () {
 		// Empty cell above Vital Sign lables
 		row.appendChild(createElement('th'));
 
-		// TODO: Flag editing class?
 		for (let i = 0; i < 3; i++) {
 			const header = createElement('th');
 			const div = createElement('div');

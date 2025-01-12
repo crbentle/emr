@@ -1,6 +1,6 @@
 :root {
 	--color-abnormal: red;
-	--color-save-pulse: #efd957;
+	--color-save-pulse: #fff8ce;
 	--color-shift-morning: #bddcbd;
 	--color-shift-afternoon: #d2dcbd;
 	--color-shift-night: #bdcadc;
@@ -532,6 +532,7 @@ body {
 		background-color: #f3f4f6;
 		text-decoration: none;
 		transition-duration: 0.1s;
+		filter: brightness(90%) contrast(1.2);
 	}
 
 	&:disabled {
@@ -624,7 +625,7 @@ input::placeholder {
 @keyframes savepulse {
 	0%,
 	100% {
-		background-color: transparent;
+		background-color: revert-layer;
 	}
 	50% {
 		background-color: var(--color-save-pulse);

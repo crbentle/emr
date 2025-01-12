@@ -105,7 +105,7 @@ var intakeAndOutputController = (function () {
 	}
 
 	/**
-	 * Sum of all 'intake' or 'output' inputs for the table and update the appropriate summary value.
+	 * Sum up all 'intake' or 'output' inputs for the table and update the appropriate summary value.
 	 * This method will also call setSummaryTotal() to update the summary section.
 	 *
 	 * @param {Node} table The table to total
@@ -133,8 +133,8 @@ var intakeAndOutputController = (function () {
 		let outputSum = getSum(document, 'output');
 		outputSummaryNode.innerHTML = `${outputSum.toLocaleString()} ml`;
 
-		const summaryDifferenceNoe = document.getElementById(`summary-daily-difference`);
-		summaryDifferenceNoe.innerHTML = `${(intakeSum - outputSum).toLocaleString()} ml`;
+		const summaryDifferenceNode = document.getElementById(`summary-daily-difference`);
+		summaryDifferenceNode.innerHTML = `${(intakeSum - outputSum).toLocaleString()} ml`;
 	}
 
 	/**

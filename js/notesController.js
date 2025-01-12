@@ -8,6 +8,16 @@ var notesController = (function () {
 			document.getElementById('note-input-container').classList.toggle('show');
 		});
 
+		document.getElementById('note-input-container').addEventListener(
+			'transitionend',
+			function () {
+				if (this.classList.contains('show')) {
+					document.getElementById('note-text').focus();
+				}
+			},
+			false
+		);
+
 		document.getElementById('save-note').addEventListener('click', (event) => {
 			saveNote(document.getElementById('note-text').value);
 		});
