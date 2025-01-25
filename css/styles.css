@@ -302,13 +302,12 @@ body {
 	td,
 	th {
 		border: 1px solid black;
-		min-width: 50px;
 		padding: 3px 5px;
 		text-align: center;
 		position: relative;
 	}
 
-	td:first-child {
+	.activity-label {
 		text-align: left;
 	}
 
@@ -329,6 +328,51 @@ body {
 
 	option {
 		text-align: center;
+	}
+
+	.group {
+		border: none;
+		width: 1px;
+		border-right: 3px solid black;
+		padding: 10px 0 10px 5px;
+		color: #efefef;
+	}
+
+	.group-label {
+		background-color: gray;
+		width: 100%;
+		align-content: center;
+		outline: 2px solid black;
+		padding: 10px 0;
+		writing-mode: vertical-lr;
+		height: min-content;
+		transform: rotate(180deg);
+		pointer-events: none;
+
+		span {
+			padding: 0 3px;
+			display: block;
+			-webkit-font-smoothing: antialiased;
+            -webkit-text-stroke: .5px black;
+            paint-order: stroke;
+		}
+	}
+
+	tbody tr {
+		border-right: 3px solid black;
+	}
+
+	.group-spacer {
+		height: 10px;
+		border: none
+	}
+
+	tbody tr:first-child td:not(td[rowspan]) {
+		border-top: 3px solid black;
+	}
+
+	tbody tr:nth-last-child(2) td:not(td[rowspan]) {
+		border-bottom: 3px solid black;
 	}
 }
 
