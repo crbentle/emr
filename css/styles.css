@@ -344,7 +344,7 @@ body {
 		align-content: center;
 		outline: 2px solid black;
 		padding: 10px 0;
-		writing-mode: vertical-lr;
+		writing-mode: vertical-rl;
 		height: min-content;
 		transform: rotate(180deg);
 		pointer-events: none;
