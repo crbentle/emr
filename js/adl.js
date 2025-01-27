@@ -1,37 +1,75 @@
 const ADL_ACTIVITIES = [
 	{
-		group: 'Bathing',
+		group: 'Toileting',
 		activities: [
 			{
-				name: 'Activity 1',
-				options: ['Option 1', 'Option 2', 'Option 3'],
+				name: 'Assistance Needed',
+				options: ['Independent', '1 Assist', '2 Assist'],
 			},
 			{
-				name: 'Activity 2',
-				options: ['Option 4', 'Option 5', 'Option 6'],
+				name: 'Bladder',
+				options: ['Continent', 'Inconteinent', 'Catheter'],
+			},
+			{
+				name: 'Bowel',
+				options: ['Continent', 'Inconteinent', 'Colostomy'],
 			},
 		],
 	},
 	{
-		group: 'Feeding',
+		group: 'Meals',
 		activities: [
 			{
-				name: 'Breakfast',
-				options: ['0%', '25%', '50%', '75%', '100%'],
+				name: 'Assistance Needed',
+				options: ['Independent', 'Set up help only', 'Supervise/Cues', 'Total Assist', 'Tube Feed'],
 			},
+			{ name: 'Breakfast', options: ['0%', '25%', '50%', '75%', '100%'] },
 			{ name: 'Lunch', options: ['0%', '25%', '50%', '75%', '100%'] },
 			{ name: 'Dinner', options: ['0%', '25%', '50%', '75%', '100%'] },
 		],
 	},
 	{
-		group: 'Another Group',
+		group: 'Mobility',
 		activities: [
 			{
-				name: 'Breakfast',
-				options: ['0%', '25%', '50%', '75%', '100%'],
+				name: 'Transfers',
+				options: ['Independent', '1 Assist', '2 Assist', 'Total Lift'],
 			},
-			{ name: 'Lunch', options: ['0%', '25%', '50%', '75%', '100%'] },
-			{ name: 'Dinner', options: ['0%', '25%', '50%', '75%', '100%'] },
+			{ name: 'Ambulation', options: ['Independent', '1 Assist', '2 Assist'] },
+			{ name: 'Assistive Device', options: ['Cane', 'Walker', 'Rollator', 'Wheelchair', 'Gerichair'] },
+			{
+				name: 'Range of Motion',
+				options: ['Active', 'Passive'],
+			},
+		],
+	},
+	{
+		group: 'ADLs/Body Care',
+		activities: [
+			{
+				name: 'Bathing',
+				options: ['Independent', 'Supervised', '1 Assist', '2 Assist'],
+			},
+			{
+				name: 'Haircare',
+				options: ['Independent', 'Assist'],
+			},
+			{
+				name: 'Nailcare',
+				options: ['Finger/Toe'],
+			},
+			{
+				name: 'Dressing/Undressing',
+				options: ['Independent', 'Supervised', '1 Assist', 'Total Assist'],
+			},
+			{
+				name: 'Mouth Care',
+				options: ['Independent', 'Set up', 'Supervised', '1 Assist', 'Dentures', 'No Teeth'],
+			},
+			{
+				name: 'Positioning',
+				options: ['Self', '1 Assist', 'wl2 Assist', 'q2hrs'],
+			},
 		],
 	},
 ];
@@ -61,7 +99,7 @@ var adlController = (function () {
 			rows[0].prepend(buildGroupLabel(group));
 		}
 
-		rows.push(createElement('tr', {attributes: {class: 'group-spacer'}}))
+		rows.push(createElement('tr', { attributes: { class: 'group-spacer' } }));
 
 		return createElement('tbody', { childNodes: rows });
 	}
