@@ -8,11 +8,11 @@ const ADL_ACTIVITIES = [
 			},
 			{
 				name: 'Bladder',
-				options: ['Continent', 'Inconteinent', 'Catheter'],
+				options: ['Continent', 'Incontinent', 'Catheter'],
 			},
 			{
 				name: 'Bowel',
-				options: ['Continent', 'Inconteinent', 'Colostomy'],
+				options: ['Continent', 'Incontinent', 'Colostomy'],
 			},
 		],
 	},
@@ -56,7 +56,7 @@ const ADL_ACTIVITIES = [
 			},
 			{
 				name: 'Nailcare',
-				options: ['Finger/Toe'],
+				options: ['Finger', 'Toe', 'Both'],
 			},
 			{
 				name: 'Dressing/Undressing',
